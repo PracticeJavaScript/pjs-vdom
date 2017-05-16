@@ -13,10 +13,10 @@ export default (state) => {
 
   return (
     <main>
-      <h1>Feather POC App</h1>
-      <nav>
+      <h1>Practice JavaScript!</h1>
+      {/*<nav>
         <a href='/'>home</a> | <a href='/about'>about</a>
-      </nav>
+      </nav>*/}
       {page}
     </main>
   )

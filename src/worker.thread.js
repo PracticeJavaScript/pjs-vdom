@@ -3,14 +3,38 @@ import diff from 'virtual-dom/diff'
 import serializePatch from 'vdom-serialized-patch/serialize'
 import fromJson from 'vdom-as-json/fromJson'
 import app from './views/app'
+import {assert} from 'chai'
+import arrays from './problems/arrays'
+
 let currentVDom
 let renderCount = 0
+let problems = []
+problems.push(...arrays)
+
+// console.log('assert', assert);
 
 // our entire application state
 // as a plain object
 const state = {
-  count: 0,
+  currentProblemIndex: 0,
+  shuffle: true,
   url: '/'
+}
+
+function getNextProblemIndex(currIndex, length) {
+  return state.shuffle
+    ? Math.floor(Math.random() * length)
+    : currentProblemIndex++
+}
+
+function getNextProblem(probs) {
+  return probs[getNextProblemIndex(state.currentProblemIndex, problems.length)]
+}
+
+function getActiveClass(attr) {
+  return state[attr]
+    ? 'active'
+    : ''
 }
 
 // messages from the main thread come
@@ -26,18 +50,20 @@ self.onmessage = ({data}) => {
     case 'start': {
       currentVDom = fromJson(payload.virtualDom)
       state.url = payload.url
+      state.problem = problems[0]
       break
     }
     case 'setUrl': {
       state.url = payload
       break
     }
-    case 'increment': {
-      state.count++
+    case 'next': {
+      state.problem = getNextProblem(problems)
       break
     }
-    case 'decrement': {
-      state.count--
+    case 'shuffle': {
+      state.shuffle = !state.shuffle
+      state.shuffleClass = getActiveClass('shuffle')
       break
     }
   }

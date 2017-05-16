@@ -1,8 +1,8 @@
-export default ({count}) => (
+export default ({shuffle, shuffleClass, problem}) => (
   <div>
-    <p>This app weighs about 8.5kb</p>
-    <button data-click={{type: 'decrement'}}> - </button>
-    <span> {count} </span>
-    <button data-click={{type: 'increment'}}> + </button>
+    <button data-click={{type: 'shuffle'}} data-class={shuffleClass}>shuffle</button>
+    <button data-click={{type: 'next'}}> &gt; </button>
+    <p>{problem.prompt}&nbsp;</p>
+    <textarea name="code" id="" cols="100" rows="10">{problem.given} </textarea>
   </div>
 )
