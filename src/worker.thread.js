@@ -13,14 +13,6 @@ problems.push(...arrays)
 
 // console.log('assert', assert);
 
-// our entire application state
-// as a plain object
-const state = {
-  currentProblemIndex: 0,
-  shuffle: true,
-  url: '/'
-}
-
 function getNextProblemIndex(currIndex, length) {
   return state.shuffle
     ? Math.floor(Math.random() * length)
@@ -36,6 +28,16 @@ function getActiveClass(attr) {
     ? 'active'
     : ''
 }
+
+// our entire application state
+// as a plain object
+const state = {
+  currentProblemIndex: 0,
+  problem: getNextProblem(problems),
+  shuffle: true,
+  url: '/'
+}
+
 
 // messages from the main thread come
 // in here

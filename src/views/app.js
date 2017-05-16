@@ -8,7 +8,7 @@ export default (state) => {
   if (url === '/') {
     page = home(state)
   } else if (url === '/about') {
-    page = about()
+    page = about(state)
   }
 
   return (
