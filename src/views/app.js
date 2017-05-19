@@ -19,7 +19,7 @@ export default (state) => {
         </div>
         <nav>
           <button data-click={{type: 'shuffle'}} className={state.shuffleClass}>shuffle</button>
-          <button data-click={{type: 'next'}}> &gt; </button>
+          <button data-click={{type: 'next'}} data-keybinding={{type: 'next'}}> &gt; </button>
         </nav>
       </heading>
       {page}

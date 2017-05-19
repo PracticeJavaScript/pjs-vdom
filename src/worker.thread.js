@@ -1,17 +1,25 @@
 /*global self*/
+
+
+// DEPS
+// ============================================================
+
 import diff from 'virtual-dom/diff'
 import serializePatch from 'vdom-serialized-patch/serialize'
 import fromJson from 'vdom-as-json/fromJson'
 import app from './views/app'
 import {assert} from 'chai'
-import initialProblem from './problems/initial'
+import initialProblems from './problems/initial'
 
 let currentVDom
 let renderCount = 0
 
 let problems = []
-problems.push(initialProblem)
+problems.push(...initialProblems)
 
+
+// STATE OBJECT
+// ============================================================
 
 // our entire application state
 // as a plain object
@@ -23,14 +31,24 @@ let state = {
   url: '/'
 }
 
+
+// APP METHODS
+// ============================================================
+
+// PROBLEM NAVIGATION
+// ============================================================
+
 function getNextProblemIndex(currIndex, length) {
   let newIndex;
+  // if shuffle on, return new random index
   if (state.shuffle) {
     newIndex = Math.floor(Math.random() * length)
   } else {
+    // if at the end of the problems array, go to the start
     if (state.currentProblemIndex === problems.length -1) {
       newIndex = 0
     } else {
+      // if not at then end, increment as normal
       newIndex = state.currentProblemIndex + 1
     }
   }
@@ -38,15 +56,25 @@ function getNextProblemIndex(currIndex, length) {
 }
 
 function getNextProblem(probs) {
+  // set new index to state
   state.currentProblemIndex = getNextProblemIndex(state.currentProblemIndex, problems.length)
+  // return new problem from that index
   return probs[state.currentProblemIndex]
 }
 
 function getActiveClass(attr) {
+  // toggle given attr between active and not
   return state[attr]
     ? 'active'
     : ''
 }
+
+// TEST VALIDATION
+// ============================================================
+
+
+// EVENT BUS
+// ============================================================
 
 // messages from the main thread come
 // in here
@@ -78,7 +106,15 @@ self.onmessage = ({data}) => {
       state.shuffleClass = getActiveClass('shuffle')
       break
     }
+    case 'codeupdate': {
+      console.log('codeupdate:', payload)
+      break
+    }
   }
+
+
+  // UPDATING THE DOM
+  // ============================================================
 
   // just for fun
   console.log('state:', state)

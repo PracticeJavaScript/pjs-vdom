@@ -80,3 +80,25 @@ document.body.addEventListener('click', (event) => {
     worker.postMessage(click)
   }
 })
+
+// Listen for all keydown events globally,
+// to bind the keyboard shortcuts, with different de-bounce for each
+document.body.addEventListener('keydown', (event) => {
+  console.log('event.keyCode:',event.keyCode)
+  if (event.keyCode === 13 && !event.shiftKey && (event.metaKey || event.ctrlKey)) {
+    console.log('keybinding: next problem!')
+    event.preventDefault()
+    worker.postMessage({type: 'next'})
+  }
+})
+
+// Listen for keyup events in code textarea
+// to auto-submit the code in textarea for test validation,
+code.addEventListener('keyup', (event) => {
+  console.log('event:', event);
+  // TODO: debounce this
+  const codeupdate = event.target['data-codeupdate']
+  if (codeupdate) {
+    worker.postMessage({type: codeupdate, payload: event.target.value})
+  }
+})
