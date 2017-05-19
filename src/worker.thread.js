@@ -4,23 +4,42 @@ import serializePatch from 'vdom-serialized-patch/serialize'
 import fromJson from 'vdom-as-json/fromJson'
 import app from './views/app'
 import {assert} from 'chai'
-import arrays from './problems/arrays'
+import initialProblem from './problems/initial'
 
 let currentVDom
 let renderCount = 0
-let problems = []
-problems.push(...arrays)
 
-// console.log('assert', assert);
+let problems = []
+problems.push(initialProblem)
+
+
+// our entire application state
+// as a plain object
+let state = {
+  currentProblemIndex: 0, // start with first index
+  problem: problems[0],   // start with first problem
+  shuffle: true,
+  shuffleClass: 'active',
+  url: '/'
+}
 
 function getNextProblemIndex(currIndex, length) {
-  return state.shuffle
-    ? Math.floor(Math.random() * length)
-    : currentProblemIndex++
+  let newIndex;
+  if (state.shuffle) {
+    newIndex = Math.floor(Math.random() * length)
+  } else {
+    if (state.currentProblemIndex === problems.length -1) {
+      newIndex = 0
+    } else {
+      newIndex = state.currentProblemIndex + 1
+    }
+  }
+  return newIndex
 }
 
 function getNextProblem(probs) {
-  return probs[getNextProblemIndex(state.currentProblemIndex, problems.length)]
+  state.currentProblemIndex = getNextProblemIndex(state.currentProblemIndex, problems.length)
+  return probs[state.currentProblemIndex]
 }
 
 function getActiveClass(attr) {
@@ -28,16 +47,6 @@ function getActiveClass(attr) {
     ? 'active'
     : ''
 }
-
-// our entire application state
-// as a plain object
-const state = {
-  currentProblemIndex: 0,
-  problem: getNextProblem(problems),
-  shuffle: true,
-  url: '/'
-}
-
 
 // messages from the main thread come
 // in here
@@ -65,13 +74,14 @@ self.onmessage = ({data}) => {
     }
     case 'shuffle': {
       state.shuffle = !state.shuffle
+      console.log('shuffle toggled! SHUFFLE:', state.shuffle)
       state.shuffleClass = getActiveClass('shuffle')
       break
     }
   }
 
   // just for fun
-  console.log('render count:', ++renderCount)
+  console.log('state:', state)
 
   // our entire app in one line:
   const newVDom = app(state)

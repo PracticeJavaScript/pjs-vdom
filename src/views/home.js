@@ -1,8 +1,6 @@
-export default ({shuffle, shuffleClass, problem}) => (
+export default (state) => (
   <div>
-    <button data-click={{type: 'shuffle'}} data-class={shuffleClass}>shuffle</button>
-    <button data-click={{type: 'next'}}> &gt; </button>
-    <p>{problem.prompt}&nbsp;</p>
-    <textarea name="code" id="" cols="100" rows="10">{problem.given} </textarea>
+    <p>{state.problem.prompt}&nbsp;</p>
+    <textarea name="code" id="code" cols="100" rows="10">{state.problem.given}</textarea>
   </div>
 )
