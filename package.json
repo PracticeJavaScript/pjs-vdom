@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "servepub": "http-serve ./public",
+    "serve": "npm run build && ./node_modules/.bin/http-serve ./public",
     "deploy": "surge -p public -d pjs-vdom.surge.sh",
     "lint": "standard",
     "start": "webpack-dev-server",
@@ -33,6 +33,7 @@
     "eslint-config-standard-react": "^1.2.1",
     "file-loader": "^0.8.5",
     "hjs-webpack": "^5.1.0",
+    "http-serve": "^1.0.1",
     "json-loader": "^0.5.4",
     "local-links": "^1.4.0",
     "postcss-loader": "^0.8.0",
