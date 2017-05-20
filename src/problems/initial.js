@@ -1,3 +1,5 @@
+import {assert} from 'chai'
+
 export default [
   {
     name: 'Create Array',
@@ -48,12 +50,12 @@ export default [
           return assert.isArray(output) === undefined;
         }
       },
-      {
-        name: 'Array has 2 items',
-        test(output) {
-          return assert.lengthOf(output, 2) === undefined;
-        }
-      }
+      // {
+      //   name: 'Array has 2 items',
+      //   test(output) {
+      //     return assert.lengthOf(output, 2) === undefined;
+      //   }
+      // }
     ]
   },
 ]

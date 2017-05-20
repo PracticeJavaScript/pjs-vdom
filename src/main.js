@@ -4,7 +4,17 @@ import virtualize from 'vdom-virtualize'
 import toJson from 'vdom-as-json/toJson'
 import applyPatch from 'vdom-serialized-patch/patch'
 import { getLocalPathname } from 'local-links'
+import { debounce } from './helpers'
 import './styles/main.styl'
+
+// Keys to ignore while user is navigating around the textarea but not changing any code
+const ignoreKeyCodes = [
+  9, // Tab
+  37, // Left arrow
+  39, // Right arrow
+  38, // Up arrow
+  40 // Down arrow
+];
 
 // Create an instance of our worker.
 // The actual loading of the script gets handled
@@ -84,7 +94,6 @@ document.body.addEventListener('click', (event) => {
 // Listen for all keydown events globally,
 // to bind the keyboard shortcuts, with different de-bounce for each
 document.body.addEventListener('keydown', (event) => {
-  console.log('event.keyCode:',event.keyCode)
   if (event.keyCode === 13 && !event.shiftKey && (event.metaKey || event.ctrlKey)) {
     console.log('keybinding: next problem!')
     event.preventDefault()
@@ -92,13 +101,17 @@ document.body.addEventListener('keydown', (event) => {
   }
 })
 
+const debouncedCodeUpdate = debounce(event => {
+  // ignore things like arrow keys for submissions
+  if (ignoreKeyCodes.indexOf(event.keyCode) === -1) {
+    const codeupdate = event.target['data-codeupdate']
+    if (codeupdate) {
+      event.preventDefault()
+      worker.postMessage({type: 'codeupdate', payload: event.target.value})
+    }
+  }
+}, 300)
+
 // Listen for keyup events in code textarea
 // to auto-submit the code in textarea for test validation,
-code.addEventListener('keyup', (event) => {
-  console.log('event:', event);
-  // TODO: debounce this
-  const codeupdate = event.target['data-codeupdate']
-  if (codeupdate) {
-    worker.postMessage({type: codeupdate, payload: event.target.value})
-  }
-})
+document.body.addEventListener('keyup', debouncedCodeUpdate)

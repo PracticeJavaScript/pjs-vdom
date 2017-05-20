@@ -72,6 +72,31 @@ function getActiveClass(attr) {
 // TEST VALIDATION
 // ============================================================
 
+function evaluate(input) {
+  let output
+  try {
+    output = eval(`(function(){${input}})()`)
+  } catch(err) {
+    output = err
+  }
+  return output
+}
+
+function testSuite(input, problem) {
+  const evaluatedInput = evaluate(input)
+  problem.evaluated = JSON.stringify(evaluatedInput);
+  let problemWithTestFeedback = problem.tests.map(test => {
+    try {
+      test.testFeedback = test.test(evaluatedInput)
+    } catch (err) {
+      test.testFeedback = err
+    }
+    return test
+  })
+  console.log('problemWithTestFeedback:', problemWithTestFeedback);
+  return problemWithTestFeedback
+}
+
 
 // EVENT BUS
 // ============================================================
@@ -90,6 +115,7 @@ self.onmessage = ({data}) => {
       currentVDom = fromJson(payload.virtualDom)
       state.url = payload.url
       state.problem = problems[0]
+      state.problem.tests = testSuite(payload, state.problem)
       break
     }
     case 'setUrl': {
@@ -97,7 +123,9 @@ self.onmessage = ({data}) => {
       break
     }
     case 'next': {
+      debugger
       state.problem = getNextProblem(problems)
+      state.problem.tests = testSuite(payload, state.problem)
       break
     }
     case 'shuffle': {
@@ -108,6 +136,7 @@ self.onmessage = ({data}) => {
     }
     case 'codeupdate': {
       console.log('codeupdate:', payload)
+      state.problem.tests = testSuite(payload, state.problem)
       break
     }
   }
