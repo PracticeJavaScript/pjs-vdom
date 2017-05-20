@@ -103,10 +103,8 @@ function testSuite(input, problem) {
     return test
   })
 
-  // all tests pass, set it in state
-  if (testResultBooleans.every(isTrue)) {
-    state.testsPass = true
-  }
+  // "all tests pass", set it in state
+  state.testsPass = testResultBooleans.every(isTrue)
   return problemWithTestFeedback
 }
 
