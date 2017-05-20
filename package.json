@@ -7,7 +7,7 @@
   "scripts": {
     "build": "webpack",
     "servepub": "http-serve ./public",
-    "deploy": "surge -p public -d feather.surge.sh",
+    "deploy": "surge -p public -d pjs-vdom.surge.sh",
     "lint": "standard",
     "start": "webpack-dev-server",
     "yolo": "npm run build && npm run deploy"

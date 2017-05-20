@@ -72,6 +72,8 @@ function getActiveClass(attr) {
 // TEST VALIDATION
 // ============================================================
 
+// TODO: Filter things out of input string, that the worker can
+// actually perform but we don't want them to
 function evaluate(input) {
   let output
   try {
@@ -123,7 +125,6 @@ self.onmessage = ({data}) => {
       break
     }
     case 'next': {
-      debugger
       state.problem = getNextProblem(problems)
       state.problem.tests = testSuite(payload, state.problem)
       break

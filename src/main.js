@@ -96,7 +96,7 @@ document.body.addEventListener('click', (event) => {
 document.body.addEventListener('keydown', (event) => {
   if (event.keyCode === 13 && !event.shiftKey && (event.metaKey || event.ctrlKey)) {
     console.log('keybinding: next problem!')
-    event.preventDefault()
+    // event.preventDefault()
     worker.postMessage({type: 'next'})
   }
 })
@@ -106,11 +106,11 @@ const debouncedCodeUpdate = debounce(event => {
   if (ignoreKeyCodes.indexOf(event.keyCode) === -1) {
     const codeupdate = event.target['data-codeupdate']
     if (codeupdate) {
-      event.preventDefault()
+      // event.preventDefault()
       worker.postMessage({type: 'codeupdate', payload: event.target.value})
     }
   }
-}, 300)
+}, 200)
 
 // Listen for keyup events in code textarea
 // to auto-submit the code in textarea for test validation,

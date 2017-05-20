@@ -6,7 +6,7 @@ export default (state) => {
   return (
     <div>
       <p>{state.problem.prompt}&nbsp;</p>
-      <textarea name="code" id="code" cols="100" rows="10" data-codeupdate={{type: 'codeupdate'}}>{state.problem.given}</textarea>
+      <textarea name="code" id="code" cols="100" rows="10" data-codeupdate={{type: 'codeupdate'}} value={state.problem.given || ''}></textarea>
       <h2>Tests</h2>
       <div className="tests">{tests}</div>
       <h2>Output</h2>
