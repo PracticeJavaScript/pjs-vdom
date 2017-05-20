@@ -108,7 +108,7 @@ function testSuite(input, problem) {
 self.onmessage = ({data}) => {
   const { type, payload } = data
 
-  console.log('worker got message:', data)
+  // console.log('worker got message:', data)
 
   // handle different event types
   // update the state accordingly
@@ -131,12 +131,10 @@ self.onmessage = ({data}) => {
     }
     case 'shuffle': {
       state.shuffle = !state.shuffle
-      console.log('shuffle toggled! SHUFFLE:', state.shuffle)
       state.shuffleClass = getActiveClass('shuffle')
       break
     }
     case 'codeupdate': {
-      console.log('codeupdate:', payload)
       state.problem.tests = testSuite(payload, state.problem)
       break
     }
