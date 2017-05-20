@@ -437,7 +437,7 @@ return {
   {
     name: 'Array.some()',
     time: 10,
-    prompt: `Return object that returns whether each array contains some odd numbers using Array.some().`,
+    prompt: `Return 'Object' that returns whether each array contains some odd numbers using 'Array.some()'.`,
     given: `
 const evenNumbers = [2, 4, 6, 8];
 const someOddNumbers = [2, 4, 7, 8];

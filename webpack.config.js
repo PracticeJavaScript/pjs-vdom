@@ -14,11 +14,6 @@ module.exports = getConfig({
     filename: '[name].[hash].bundle.js',
     chunkFilename: '[id].[hash].chunk.js'
   },
-  resolve: {
-    alias: {
-      'problems-arrays': './src/problems/arrays.js'
-    }
-  },
   html: function (context) {
     function render (state) {
       return context.defaultTemplate({html: toHtml(app(state))})

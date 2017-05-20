@@ -120,6 +120,7 @@ const debouncedCodeUpdate = debounce(event => {
 // to auto-submit the code in textarea for test validation,
 document.body.addEventListener('keyup', debouncedCodeUpdate)
 
+// Lazy-load the rest of the content after the app's booted
 function lazyLoadContent() {
   problemSets.forEach(setName => {
     require.ensure([], () => {
@@ -129,5 +130,5 @@ function lazyLoadContent() {
     })
   })
 }
-
-window.addEventListener('load', lazyLoadContent)
+lazyLoadContent()
+// window.addEventListener('load', lazyLoadContent)

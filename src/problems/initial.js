@@ -1,5 +1,3 @@
-import {assert} from 'chai'
-
 export default [
   {
     name: 'Create Array',

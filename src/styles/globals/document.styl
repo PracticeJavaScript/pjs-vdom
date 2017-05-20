@@ -13,13 +13,14 @@ body
   color: $black
   text-rendering: optimizeSpeed
   padding-bottom: 80px
+  background-color: $background
 
 a
   color: $blue
 
 main
   padding: 20px
-  max-width: 85%
+  max-width: 90%
   margin: auto
 
 heading
@@ -27,21 +28,133 @@ heading
   align-items: center
   justify-content: space-between
 
+  h1
+    text-shadow: -1px -1px 0px darken($fail, 60%),
+                 -2px -2px 0px darken($fail, 40%),
+                 -3px -3px 0px darken($fail, 20%),
+                 -4px -4px 0px darken($fail, 10%),
+                 -5px -5px 0px darken($fail, 0%)
+    letter-spacing: 0.05em
+    color: black
+    text-transform: uppercase
+
 nav > button
-  padding: 1em 2em
-  border: 2px solid white
-  cursor: pointer
+  font-size: 100%;
+  padding: 0.8em 1.8em;
+  border: 3px solid #fff;
+  cursor: pointer;
+  color: #fff;
+  background-color: transparent;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0.2em;
+  text-shadow: 2px 2px 1px rgba(0,0,0,0.3);
 
   &.active
-    background-color: lightblue
+    background-color: darken($fail, 20%)
 
 .prompt
   min-height: 2em
+  background-color: $lightgray
+  padding: 1em 1.5em
+  border: 3px solid white
+
+.tests-and-code
+  display: flex
+  align-items: flex-start
+
+.test-area
+  flex: 3
+  font-size: 70%
+  position: relative
+  margin-right: 0.5em
+
+.test-status
+  background-color: $black
+  color: white
+  padding: 0.5em 1em
+  text-align: center
+  // font-weight: bold
+  font-size: 150%
+  letter-spacing: 0.05em
+
+  &.pass
+    background-color: darken($pass, 40%)
+
+  &.fail
+    background-color: darken($fail, 10%)
+
+.tests
+  margin-top: 0.5em
+
+.test
+  font-family: Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace
+  margin: 0 0 0.5em
+
+.test-heading
+  display: flex
+  color: white
+  background-color: $black
+  padding: 0.25em
+
+  .test-status-single
+    margin-right: 0.4em
+
+    &.pass
+      color: $pass
+
+    &.fail
+      color: $fail
+
+.feedback
+  font-size: 80%
+  padding: 1em;
+  background-color: $lightgray;
+  color: $black;
+
+.code-area
+  flex: 7
+  position: relative
+
+  &> *
+    font-family: Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace
+    font-size: 80%
+    color: white
+    background-color: $black
+
+.evaluated, textarea
+  padding: 1.3em 1em 1em
+  // font-size: 100%
+  width: 100%
 
 textarea
-  font-size: 80%
-  width: 100%
-  padding: 1em
-  color: white
-  background-color: #333
-  font-family: monospace;
+  resize: vertical
+
+.output
+  display: flex
+  align-items: center
+  position: relative
+
+.label
+  position: absolute
+  top: 0
+  left: 0
+  margin: .1em 0.3em
+  font-size: 12px
+  text-transform: uppercase
+  color: darken($pass, 10%)
+
+@media (max-width: 700px)
+
+  heading
+    flex-direction: column
+
+    h1
+      text-align: center
+      line-height: 1em
+
+  .tests-and-code
+    flex-direction: column-reverse
+
+  .test-area
+    width: 100%

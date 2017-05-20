@@ -26,8 +26,8 @@ problems.push(...initialProblems)
 let state = {
   currentProblemIndex: 0, // start with first index
   problem: problems[0],   // start with first problem
+  testsPass: false,
   shuffle: true,
-  shuffleClass: 'active',
   url: '/'
 }
 
@@ -62,13 +62,6 @@ function getNextProblem(probs) {
   return probs[state.currentProblemIndex]
 }
 
-function getActiveClass(attr) {
-  // toggle given attr between active and not
-  return state[attr]
-    ? 'active'
-    : ''
-}
-
 // TEST VALIDATION
 // ============================================================
 
@@ -84,21 +77,36 @@ function evaluate(input) {
   return output
 }
 
+function isTrue(result) {
+  return result === true
+}
+
 function testSuite(input, problem) {
   debugger
   const assert = chai.assert;
   const output = evaluate(input)
+  let testResultBooleans = []
+  // stringify output to show in ui console
   problem.evaluated = JSON.stringify(output);
 
   let problemWithTestFeedback = problem.tests.map(test => {
     try {
       const testEval = eval(test.test);
+      if (testEval === true) {
+        testResultBooleans.push(true)
+      }
       test.testFeedback = testEval
     } catch (err) {
+      testResultBooleans.push(false)
       test.testFeedback = err
     }
     return test
   })
+
+  // all tests pass, set it in state
+  if (testResultBooleans.every(isTrue)) {
+    state.testsPass = true
+  }
   return problemWithTestFeedback
 }
 
@@ -130,11 +138,11 @@ self.onmessage = ({data}) => {
     case 'next': {
       state.problem = getNextProblem(problems)
       state.problem.tests = testSuite(payload, state.problem)
+      state.testsPass = false
       break
     }
     case 'shuffle': {
       state.shuffle = !state.shuffle
-      state.shuffleClass = getActiveClass('shuffle')
       break
     }
     case 'codeupdate': {
@@ -143,6 +151,7 @@ self.onmessage = ({data}) => {
     }
     case 'newproblems': {
       problems.push(...payload.default)
+      // todo: show a toast that new content has been loaded for them
       break
     }
   }
