@@ -11,21 +11,15 @@ export default [
     tests: [
       {
         name: 'Correct output',
-        test(output) {
-          return assert.deepEqual(output, ['apple', 'banana']) === undefined;
-        }
+        test: `assert.deepEqual(output, ['apple', 'banana']) === undefined;`
       },
       {
         name: 'Returns an Array',
-        test(output) {
-          return assert.isArray(output) === undefined;
-        }
+        test: `assert.isArray(output) === undefined;`
       },
       {
         name: 'Array has 2 items',
-        test(output) {
-          return assert.lengthOf(output, 2) === undefined;
-        }
+        test: `assert.lengthOf(output, 2) === undefined;`
       }
     ]
   },
@@ -40,22 +34,16 @@ export default [
     tests: [
       {
         name: 'Correct output',
-        test(output) {
-          return assert.deepEqual(output, ['apple', 'banana']) === undefined;
-        }
+        test: `assert.deepEqual(output, ['apple', 'banana']) === undefined;`
       },
       {
         name: 'Returns an Array',
-        test(output) {
-          return assert.isArray(output) === undefined;
-        }
+        test: `assert.isArray(output) === undefined;`
       },
-      // {
-      //   name: 'Array has 2 items',
-      //   test(output) {
-      //     return assert.lengthOf(output, 2) === undefined;
-      //   }
-      // }
+      {
+        name: 'Array has 2 items',
+        test: `assert.lengthOf(output, 2) === undefined;`
+      }
     ]
   },
 ]

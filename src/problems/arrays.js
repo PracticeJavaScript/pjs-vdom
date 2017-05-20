@@ -1,5 +1,3 @@
-import {assert} from 'chai'
-
 export default [
   {
     name: 'Access Array by index (first)',
@@ -11,15 +9,11 @@ export default [
     tests: [
       {
         name: 'Correct output',
-        test(output) {
-          return assert.deepEqual(output, 'apple') === undefined;
-        }
+        test: 'assert.deepEqual(output, \'apple\') === undefined'
       },
       {
         name: 'Returns a String',
-        test(output) {
-          return assert.isString(output) === undefined;
-        }
+        test: 'assert.isString(output) === undefined'
       }
     ]
   },
@@ -33,15 +27,11 @@ export default [
     tests: [
       {
         name: 'Correct output',
-        test(output) {
-          return assert.deepEqual(output, 'orange') === undefined;
-        }
+        test: `assert.deepEqual(output, 'orange') === undefined;`
       },
       {
         name: 'Returns a String',
-        test(output) {
-          return assert.isString(output) === undefined;
-        }
+        test: `assert.isString(output) === undefined;`
       }
     ]
   },
@@ -55,15 +45,11 @@ export default [
     tests: [
       {
         name: 'Correct output',
-        test(output) {
-          return assert.deepEqual(output, 'banana') === undefined;
-        }
+        test: `assert.deepEqual(output, 'banana') === undefined;`
       },
       {
         name: 'Returns a String',
-        test(output) {
-          return assert.isString(output) === undefined;
-        }
+        test: `assert.isString(output) === undefined;`
       }
     ]
   },
@@ -81,21 +67,15 @@ export default [
     tests: [
       {
         name: 'Correct output',
-        test(output) {
-          return assert.deepEqual(output, ['applex', 'bananax']) === undefined;
-        }
+        test: `assert.deepEqual(output, ['applex', 'bananax']) === undefined;`
       },
       {
         name: 'Returns an Array',
-        test(output) {
-          return assert.isArray(output) === undefined;
-        }
+        test: `assert.isArray(output) === undefined;`
       },
       {
         name: 'Array has 2 items',
-        test(output) {
-          return assert.lengthOf(output, 2) === undefined;
-        }
+        test: `assert.lengthOf(output, 2) === undefined;`
       }
     ]
   },
@@ -110,21 +90,15 @@ export default [
     tests: [
       {
         name: 'Correct output',
-        test(output) {
-          return (assert.deepEqual(output, ['apple', 'banana', 'orange']) === undefined);
-        }
+        test: `(assert.deepEqual(output, ['apple', 'banana', 'orange']) === undefined);`
       },
       {
         name: 'Returns an Array',
-        test(output) {
-          return assert.isArray(output) === undefined;
-        }
+        test: `assert.isArray(output) === undefined;`
       },
       {
         name: 'Array has 3 items',
-        test(output) {
-          return assert.lengthOf(output, 3) === undefined;
-        }
+        test: `assert.lengthOf(output, 3) === undefined;`
       }
     ]
   },
@@ -139,21 +113,15 @@ export default [
     tests: [
       {
         name: 'Output must be correct',
-        test(output) {
-          return assert.deepEqual(output, ['banana', 'orange']) === undefined;
-        }
+        test: `assert.deepEqual(output, ['banana', 'orange']) === undefined;`
       },
       {
         name: 'Returns an Array',
-        test(output) {
-          return assert.isArray(output) === undefined;
-        }
+        test: `assert.isArray(output) === undefined;`
       },
       {
         name: 'Array has 2 items',
-        test(output) {
-          return assert.lengthOf(output, 2) === undefined;
-        }
+        test: `assert.lengthOf(output, 2) === undefined;`
       }
     ]
   },
@@ -168,28 +136,20 @@ export default [
     tests: [
       {
         name: 'Output must be correct',
-        test(output) {
-          return (
-            assert.deepEqual(output, [
-              'strawberry',
-              'apple',
-              'banana',
-              'orange'
-            ]) === undefined
-          );
-        }
+        test: `(assert.deepEqual(output, [
+                  'strawberry',
+                  'apple',
+                  'banana',
+                  'orange'
+                ]) === undefined)`
       },
       {
         name: 'Must return an Array',
-        test(output) {
-          return assert.isArray(output) === undefined;
-        }
+        test: `assert.isArray(output) === undefined;`
       },
       {
         name: 'Array has 4 items',
-        test(output) {
-          return assert.lengthOf(output, 4) === undefined;
-        }
+        test: `assert.lengthOf(output, 4) === undefined;`
       }
     ]
   },
@@ -204,15 +164,11 @@ export default [
     tests: [
       {
         name: 'Correct output',
-        test(output) {
-          return assert.deepEqual(output, 1) === undefined;
-        }
+        test: `assert.deepEqual(output, 1) === undefined;`
       },
       {
         name: 'Returns a Number',
-        test(output) {
-          return assert.isNumber(output) === undefined;
-        }
+        test: `assert.isNumber(output) === undefined;`
       }
     ]
   },
@@ -228,28 +184,21 @@ export default [
     tests: [
       {
         name: 'Correct output',
-        test(output) {
-          return (
-            assert.deepEqual(output, [
-              'strawberry',
-              'banana',
-              'pear',
-              'peach'
-            ]) === undefined
-          );
-        }
+        test: `(assert.deepEqual(output, [
+                  'strawberry',
+                  'banana',
+                  'pear',
+                  'peach'
+                ]) === undefined
+              );`
       },
       {
         name: 'Returns an Array',
-        test(output) {
-          return assert.isArray(output) === undefined;
-        }
+        test: `assert.isArray(output) === undefined;`
       },
       {
         name: 'Array has 4 items',
-        test(output) {
-          return assert.lengthOf(output, 4) === undefined;
-        }
+        test: `assert.lengthOf(output, 4) === undefined;`
       }
     ]
   },
@@ -264,15 +213,11 @@ export default [
     tests: [
       {
         name: 'Correct output',
-        test(output) {
-          return assert.deepEqual(output, 'strawberry-banana') === undefined;
-        }
+        test: `assert.deepEqual(output, 'strawberry-banana') === undefined;`
       },
       {
         name: 'Returns a String',
-        test(output) {
-          return assert.isString(output) === undefined;
-        }
+        test: `assert.isString(output) === undefined;`
       }
     ]
   },
@@ -287,21 +232,15 @@ export default [
     tests: [
       {
         name: 'Correct output',
-        test(output) {
-          return assert.deepEqual(output, ['orange', 'lemon']) === undefined;
-        }
+        test: `assert.deepEqual(output, ['orange', 'lemon']) === undefined;`
       },
       {
         name: 'Returns an Array',
-        test(output) {
-          return assert.isArray(output) === undefined;
-        }
+        test: `assert.isArray(output) === undefined;`
       },
       {
         name: 'Array has 2 items',
-        test(output) {
-          return assert.lengthOf(output, 2) === undefined;
-        }
+        test: `assert.lengthOf(output, 2) === undefined;`
       }
     ]
   },
@@ -316,34 +255,24 @@ export default [
     tests: [
       {
         name: 'Correct output',
-        test(output) {
-          return (
-            assert.deepEqual(output, [
-              'banana',
-              'lemon',
-              'orange',
-              'strawberry'
-            ]) === undefined
-          );
-        }
+        test: `(assert.deepEqual(output, [
+                  'banana',
+                  'lemon',
+                  'orange',
+                  'strawberry'
+                ]) === undefined);`
       },
       {
         name: 'Returns an Array',
-        test(output) {
-          return assert.isArray(output) === undefined;
-        }
+        test: `assert.isArray(output) === undefined;`
       },
       {
         name: 'Array has 4 items',
-        test(output) {
-          return assert.lengthOf(output, 4) === undefined;
-        }
+        test: `assert.lengthOf(output, 4) === undefined;`
       },
       {
         name: `First item is 'banana'`,
-        test(output) {
-          return assert.deepEqual(output[0], 'banana') === undefined;
-        }
+        test: `assert.deepEqual(output[0], 'banana') === undefined;`
       }
     ]
   },
@@ -358,34 +287,24 @@ export default [
     tests: [
       {
         name: 'Correct output',
-        test(output) {
-          return (
-            assert.deepEqual(output, [
-              'banana',
-              'lemon',
-              'orange',
-              'strawberry'
-            ]) === undefined
-          );
-        }
+        test: `(assert.deepEqual(output, [
+                  'banana',
+                  'lemon',
+                  'orange',
+                  'strawberry'
+                ]) === undefined);`
       },
       {
         name: 'Returns an Array',
-        test(output) {
-          return assert.isArray(output) === undefined;
-        }
+        test: `assert.isArray(output) === undefined;`
       },
       {
         name: 'Array has 4 items',
-        test(output) {
-          return assert.lengthOf(output, 4) === undefined;
-        }
+        test: `assert.lengthOf(output, 4) === undefined;`
       },
       {
         name: `First item is 'banana'`,
-        test(output) {
-          return assert.deepEqual(output[0], 'banana') === undefined;
-        }
+        test: `assert.deepEqual(output[0], 'banana') === undefined;`
       }
     ]
   },
@@ -400,15 +319,11 @@ export default [
     tests: [
       {
         name: 'Correct output',
-        test(output) {
-          return assert.deepEqual(output, 3) === undefined;
-        }
+        test: `assert.deepEqual(output, 3) === undefined;`
       },
       {
         name: 'Returns a Number',
-        test(output) {
-          return assert.isNumber(output) === undefined;
-        }
+        test: `assert.isNumber(output) === undefined;`
       }
     ]
   },
@@ -423,27 +338,19 @@ export default [
     tests: [
       {
         name: 'Correct output',
-        test(output) {
-          return assert.deepEqual(output, [8, 13, 21]) === undefined;
-        }
+        test: `assert.deepEqual(output, [8, 13, 21]) === undefined;`
       },
       {
         name: 'Returns an Array',
-        test(output) {
-          return assert.isArray(output) === undefined;
-        }
+        test: `assert.isArray(output) === undefined;`
       },
       {
         name: 'Array has 3 items',
-        test(output) {
-          return assert.lengthOf(output, 3) === undefined;
-        }
+        test: `assert.lengthOf(output, 3) === undefined;`
       },
       {
         name: `First item is 8`,
-        test(output) {
-          return assert.deepEqual(output[0], 8) === undefined;
-        }
+        test: `assert.deepEqual(output[0], 8) === undefined;`
       }
     ]
   },
@@ -458,33 +365,23 @@ export default [
     tests: [
       {
         name: 'Correct output',
-        test(output) {
-          return assert.deepEqual(output, [5, 11, 13]) === undefined;
-        }
+        test: `assert.deepEqual(output, [5, 11, 13]) === undefined;`
       },
       {
         name: 'Returns an Array',
-        test(output) {
-          return assert.isArray(output) === undefined;
-        }
+        test: `assert.isArray(output) === undefined;`
       },
       {
         name: 'Array has 3 items',
-        test(output) {
-          return assert.lengthOf(output, 3) === undefined;
-        }
+        test: `assert.lengthOf(output, 3) === undefined;`
       },
       {
         name: `First item is 5`,
-        test(output) {
-          return assert.deepEqual(output[0], 5) === undefined;
-        }
+        test: `assert.deepEqual(output[0], 5) === undefined;`
       },
       {
         name: `Last item is 13`,
-        test(output) {
-          return assert.deepEqual(output[output.length - 1], 13) === undefined;
-        }
+        test: `assert.deepEqual(output[output.length - 1], 13) === undefined;`
       }
     ]
   },
@@ -514,36 +411,26 @@ return {
     tests: [
       {
         name: 'Correct output',
-        test(output) {
-          return assert.deepEqual(output, {
+        test: `assert.deepEqual(output, {
             evenNumbers: true,
             someOddNumbers: false
-          }) === undefined;
-        }
+          }) === undefined;`
       },
       {
         name: 'Returns an Object',
-        test(output) {
-          return assert.isObject(output) === undefined;
-        }
+        test: `assert.isObject(output) === undefined;`
       },
       {
         name: 'Object has 2 items',
-        test(output) {
-          return assert.lengthOf(Object.keys(output), 2) === undefined;
-        }
+        test: `assert.lengthOf(Object.keys(output), 2) === undefined;`
       },
       {
         name: `First value is true`,
-        test(output) {
-          return assert.isTrue(output.evenNumbers) === undefined;
-        }
+        test: `assert.isTrue(output.evenNumbers) === undefined;`
       },
       {
         name: `Second value is false`,
-        test(output) {
-          return assert.isFalse(output.someOddNumbers) === undefined;
-        }
+        test: `assert.isFalse(output.someOddNumbers) === undefined;`
       }
     ]
   },
@@ -573,36 +460,26 @@ return {
     tests: [
       {
         name: 'Correct output',
-        test(output) {
-          return assert.deepEqual(output, {
+        test: `assert.deepEqual(output, {
             evenNumbers: false,
             someOddNumbers: true
-          }) === undefined;
-        }
+          }) === undefined;`
       },
       {
         name: 'Returns an Object',
-        test(output) {
-          return assert.isObject(output) === undefined;
-        }
+        test: `assert.isObject(output) === undefined;`
       },
       {
         name: 'Object has 2 items',
-        test(output) {
-          return assert.lengthOf(Object.keys(output), 2) === undefined;
-        }
+        test: `assert.lengthOf(Object.keys(output), 2) === undefined;`
       },
       {
         name: `First value is false`,
-        test(output) {
-          return assert.isFalse(output.evenNumbers) === undefined;
-        }
+        test: `assert.isFalse(output.evenNumbers) === undefined;`
       },
       {
         name: `Second value is true`,
-        test(output) {
-          return assert.isTrue(output.someOddNumbers) === undefined;
-        }
+        test: `assert.isTrue(output.someOddNumbers) === undefined;`
       }
     ]
   }

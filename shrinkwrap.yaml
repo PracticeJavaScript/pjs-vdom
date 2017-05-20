@@ -1,3 +1,4 @@
+createdWith: pnpm@0.68.0
 dependencies:
   babel-core@^6.24.1: 6.24.1
   babel-loader@^6.2.0: 6.4.1
@@ -28,8 +29,8 @@ dependencies:
   vdom-to-html@^2.2.0: 2.3.1
   vdom-virtualize@^1.0.1: 1.0.6
   virtual-dom@^2.1.1: 2.1.1
-  webpack-dev-server@^1.14.0: 1.16.5
-  webpack@^1.12.9: 1.15.0
+  webpack-dev-server@^1.16.5: 1.16.5
+  webpack@^1.15.0: 1.15.0
   worker-loader@^0.7.0: 0.7.1
 packages:
   /abbrev/1.1.0: d0554c2256636e2f56e7c2e5ad183f859428d81f

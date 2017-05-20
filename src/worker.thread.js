@@ -8,7 +8,7 @@ import diff from 'virtual-dom/diff'
 import serializePatch from 'vdom-serialized-patch/serialize'
 import fromJson from 'vdom-as-json/fromJson'
 import app from './views/app'
-import {assert} from 'chai'
+import chai from 'chai'
 import initialProblems from './problems/initial'
 
 let currentVDom
@@ -85,11 +85,15 @@ function evaluate(input) {
 }
 
 function testSuite(input, problem) {
-  const evaluatedInput = evaluate(input)
-  problem.evaluated = JSON.stringify(evaluatedInput);
+  debugger
+  const assert = chai.assert;
+  const output = evaluate(input)
+  problem.evaluated = JSON.stringify(output);
+
   let problemWithTestFeedback = problem.tests.map(test => {
     try {
-      test.testFeedback = test.test(evaluatedInput)
+      const testEval = eval(test.test);
+      test.testFeedback = testEval
     } catch (err) {
       test.testFeedback = err
     }
@@ -135,6 +139,10 @@ self.onmessage = ({data}) => {
     }
     case 'codeupdate': {
       state.problem.tests = testSuite(payload, state.problem)
+      break
+    }
+    case 'newproblems': {
+      problems.push(...payload.default)
       break
     }
   }

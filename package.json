@@ -49,8 +49,8 @@
     "vdom-to-html": "^2.2.0",
     "vdom-virtualize": "^1.0.1",
     "virtual-dom": "^2.1.1",
-    "webpack": "^1.12.9",
-    "webpack-dev-server": "^1.14.0",
+    "webpack": "^1.15.0",
+    "webpack-dev-server": "^1.16.5",
     "worker-loader": "^0.7.0"
   }
 }

@@ -6,6 +6,13 @@ import applyPatch from 'vdom-serialized-patch/patch'
 import { getLocalPathname } from 'local-links'
 import { debounce } from './helpers'
 import './styles/main.styl'
+import {assert} from 'chai'
+
+
+// problem sets to lazy-load in
+const problemSets = [
+  'arrays'
+]
 
 // Keys to ignore while user is navigating around the textarea but not changing any code
 const ignoreKeyCodes = [
@@ -112,3 +119,15 @@ const debouncedCodeUpdate = debounce(event => {
 // Listen for keyup events in code textarea
 // to auto-submit the code in textarea for test validation,
 document.body.addEventListener('keyup', debouncedCodeUpdate)
+
+function lazyLoadContent() {
+  problemSets.forEach(setName => {
+    require.ensure([], () => {
+      let problems = require(`./problems/${setName}`)
+      console.log('newProblemArray:', problems);
+      worker.postMessage({type: 'newproblems', payload: problems})
+    })
+  })
+}
+
+window.addEventListener('load', lazyLoadContent)
