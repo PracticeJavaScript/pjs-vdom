@@ -95,7 +95,6 @@ function testSuite(input, problem) {
     }
     return test
   })
-  console.log('problemWithTestFeedback:', problemWithTestFeedback);
   return problemWithTestFeedback
 }
 
