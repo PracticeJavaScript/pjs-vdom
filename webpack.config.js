@@ -14,7 +14,7 @@ module.exports = getConfig({
 
     return {
       'about.html': render({url: '/about'}),
-      'index.html': render({url: '/', problem: {}})
+      'index.html': render({url: '/', problem: {tests: []}})
     }
   }
 })
