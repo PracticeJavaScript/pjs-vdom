@@ -1,4 +1,4 @@
-# practicejavascript app
+# PracticeJavaScript app
 
 Practice JavaScript with this fun app!
 This version uses virtual-dom and web workers.
@@ -7,7 +7,7 @@ This version uses virtual-dom and web workers.
 
 # credits
 
-PracticeJavaScript, made by [@jakob_anderson](http://twitter.com/jakob_anderson)
-Made on top of feather-app, which was created by [@HenrikJoreteg](http://twitter.com/henrikjoreteg).
+- PracticeJavaScript, made by [@jakob_anderson](http://twitter.com/jakob_anderson)
+- Made on top of feather-app, which was created by [@HenrikJoreteg](http://twitter.com/henrikjoreteg).
 
 Pull Requests welcome!

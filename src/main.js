@@ -160,7 +160,7 @@ function lazyLoadContent() {
   problemSets.forEach(setName => {
     require.ensure([], () => {
       let problems = require(`./problems/${setName}`)
-      console.log('newProblemArray:', problems);
+      // console.log('newProblemArray:', problems);
       worker.postMessage({type: 'newproblems', payload: problems})
     })
   })
