@@ -16,7 +16,7 @@ body
   background-color: $background
 
 a
-  color: $blue
+  color: $fail
 
 main
   padding: 20px
@@ -29,11 +29,11 @@ heading
   justify-content: space-between
 
   h1
-    text-shadow: -1px -1px 0px darken($fail, 60%),
-                 -2px -2px 0px darken($fail, 40%),
-                 -3px -3px 0px darken($fail, 20%),
-                 -4px -4px 0px darken($fail, 10%),
-                 -5px -5px 0px darken($fail, 0%)
+    text-shadow: 1px 1px 0px darken($fail, 60%),
+                 2px 2px 0px darken($fail, 40%),
+                 3px 3px 0px darken($fail, 20%),
+                 4px 4px 0px darken($fail, 10%),
+                 5px 5px 0px darken($fail, 0%)
     letter-spacing: 0.05em
     color: black
     text-transform: uppercase
@@ -99,6 +99,7 @@ nav > button
 
   .test-status-single
     margin-right: 0.4em
+    transition: color 200ms ease-in-out
 
     &.pass
       color: $pass
@@ -121,6 +122,7 @@ nav > button
     font-size: 80%
     color: white
     background-color: $black
+    border: transparent
 
 .evaluated, textarea
   padding: 1.3em 1em 1em
@@ -143,6 +145,18 @@ textarea
   font-size: 12px
   text-transform: uppercase
   color: darken($pass, 10%)
+
+footer
+  display: flex
+  flex-direction: column
+  margin-top: 1em
+
+  &> div
+    align-self: center
+    font-size: 70%
+
+.copyright
+  font-size: 100%
 
 @media (max-width: 700px)
 

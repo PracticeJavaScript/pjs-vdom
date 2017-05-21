@@ -279,7 +279,7 @@ export default [
   {
     name: 'Array.sort()',
     time: 10,
-    prompt: `Sort the order of the 'fruit' array using 'Array.sort()'`,
+    prompt: `Return the 'fruits' Array after sorting them using 'Array.sort()'.`,
     given: `const fruits = ['strawberry', 'orange', 'lemon', 'banana'];\r`,
     answer: `const fruits = ['strawberry', 'orange', 'lemon', 'banana'];
              const orderlyFruit = fruits.sort();
