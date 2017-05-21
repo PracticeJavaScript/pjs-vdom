@@ -65,9 +65,7 @@ function getNextProblem(probs) {
 // TEST VALIDATION
 // ============================================================
 
-// TODO: Filter things out of input string, that the worker can
-// actually perform but we don't want them to
-function evaluate(input) {
+function evaluate(input = undefined) {
   let output
   try {
     output = eval(`(function(){${input}})()`)
@@ -77,12 +75,7 @@ function evaluate(input) {
   return output
 }
 
-function isTrue(result) {
-  return result === true
-}
-
-function testSuite(input, problem) {
-  debugger
+function testSuite(input = 'undefined', problem) {
   const assert = chai.assert;
   const output = evaluate(input)
   let testResultBooleans = []
@@ -104,7 +97,7 @@ function testSuite(input, problem) {
   })
 
   // "all tests pass", set it in state
-  state.testsPass = testResultBooleans.every(isTrue)
+  state.testsPass = testResultBooleans.every((result => result === true))
   return problemWithTestFeedback
 }
 
@@ -123,10 +116,21 @@ self.onmessage = ({data}) => {
   // update the state accordingly
   switch (type) {
     case 'start': {
+      // console.log('payload.localState:', payload.localState);
       currentVDom = fromJson(payload.virtualDom)
-      state.url = payload.url
-      state.problem = problems[0]
-      state.problem.tests = testSuite(payload, state.problem)
+      if (payload.localState) {
+        state.shuffle = payload.localState.shuffle
+        // will bring back the last problem they were on
+        state.problem = payload.localState.problem || false
+      }
+      state.url = state.url || payload.url
+      // if we didn't recover a saved problem from localstorage, go get a new one!
+      if (!state.problem) {
+        state.problem = state.shuffle
+          ? problems[getNextProblemIndex(state.currentProblemIndex, problems.length)]
+          : problems[0]
+      }
+      state.problem.tests = testSuite(state.problem.given, state.problem)
       break
     }
     case 'setUrl': {
@@ -135,8 +139,8 @@ self.onmessage = ({data}) => {
     }
     case 'next': {
       state.problem = getNextProblem(problems)
-      state.problem.tests = testSuite(payload, state.problem)
       state.testsPass = false
+      state.problem.tests = testSuite(state.problem.given, state.problem)
       break
     }
     case 'shuffle': {
@@ -144,6 +148,7 @@ self.onmessage = ({data}) => {
       break
     }
     case 'codeupdate': {
+      // console.log('payload:', payload);
       state.problem.tests = testSuite(payload, state.problem)
       break
     }
@@ -160,6 +165,12 @@ self.onmessage = ({data}) => {
 
   // just for fun
   console.log('state:', state)
+  // serialize the state, and delete reversible big bits so we can save in localstorage
+  let tinyState = {
+    shuffle: state.shuffle,
+    problem: state.problem
+  }
+  const serializedState = JSON.stringify(tinyState)
 
   // our entire app in one line:
   const newVDom = app(state)
@@ -172,5 +183,5 @@ self.onmessage = ({data}) => {
   currentVDom = newVDom
 
   // send patches and current url back to the main thread
-  self.postMessage({url: state.url, payload: serializePatch(patches)})
+  self.postMessage({url: state.url, payload: serializePatch(patches), serializedState})
 }

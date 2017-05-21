@@ -1,4 +1,8 @@
 /*global history, requestAnimationFrame, location*/
+
+// DEPS
+// ============================================================
+
 import WorkerThread from './worker.thread'
 import virtualize from 'vdom-virtualize'
 import toJson from 'vdom-as-json/toJson'
@@ -8,6 +12,9 @@ import { debounce } from './helpers'
 import './styles/main.styl'
 import {assert} from 'chai'
 
+
+// CONFIG
+// ============================================================
 
 // problem sets to lazy-load in
 const problemSets = [
@@ -23,6 +30,29 @@ const ignoreKeyCodes = [
   40 // Down arrow
 ];
 
+// LOCAL STATE PERSIST
+// ============================================================
+
+function getLocalState() {
+  const localState = localStorage.getItem('pjs_state')
+  let parsedState = false
+  if (localState) {
+    parsedState = JSON.parse(localState)
+  } else {
+    console.log('Error getting previous or no local config stored.')
+  }
+  return parsedState
+}
+
+function saveLocalState(stateString) {
+  localStorage.setItem('pjs_state', stateString)
+  // console.log('Just saved local state:', stateString);
+}
+
+
+// WORKER EVENT DISPATCHER
+// ============================================================
+
 // Create an instance of our worker.
 // The actual loading of the script gets handled
 // by webpack's worker-loader:
@@ -37,7 +67,7 @@ const rootElement = document.body.firstChild
 // the real DOM. We do this on a requestAnimationFrame
 // for minimal impact
 worker.onmessage = ({data}) => {
-  const { url, payload } = data
+  const { url, payload, serializedState } = data
   requestAnimationFrame(() => {
     applyPatch(rootElement, payload)
   })
@@ -49,6 +79,10 @@ worker.onmessage = ({data}) => {
   if (location.pathname !== url) {
     history.pushState(null, null, url)
   }
+  // save state to localstorage, so we can come back to it later
+  if (serializedState) {
+    saveLocalState(serializedState)
+  }
 }
 
 // we start things off by sending a virtual DOM
@@ -56,7 +90,8 @@ worker.onmessage = ({data}) => {
 // the current URL to our worker
 worker.postMessage({type: 'start', payload: {
   virtualDom: toJson(virtualize(rootElement)),
-  url: location.pathname
+  url: location.pathname,
+  localState: getLocalState()
 }})
 
 // if the user hits the back/forward buttons
