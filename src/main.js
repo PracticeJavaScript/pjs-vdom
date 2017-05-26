@@ -141,6 +141,24 @@ document.body.addEventListener('keydown', (event) => {
   }
 })
 
+document.querySelector("textarea").addEventListener('keydown', function(event) {
+  if(event.keyCode === 9) { // tab was pressed
+    // get caret position/selection
+    var start = this.selectionStart;
+    var end = this.selectionEnd;
+    var target = event.target;
+    var value = target.value;
+    // set textarea value to: text before caret + tab + text after caret
+    target.value = value.substring(0, start)
+      + "\t"
+      + value.substring(end);
+    // put caret at right position again (add one for the tab)
+    this.selectionStart = this.selectionEnd = start + 1;
+    // prevent the focus lose
+    event.preventDefault();
+  }
+}, false)
+
 const debouncedCodeUpdate = debounce(event => {
   // ignore things like arrow keys for submissions
   if (ignoreKeyCodes.indexOf(event.keyCode) === -1) {
@@ -153,7 +171,7 @@ const debouncedCodeUpdate = debounce(event => {
 
 // Listen for keyup events in code textarea
 // to auto-submit the code in textarea for test validation,
-document.body.addEventListener('keyup', debouncedCodeUpdate)
+code.addEventListener('keyup', debouncedCodeUpdate)
 
 // Lazy-load the rest of the content after the app's booted
 function lazyLoadContent() {

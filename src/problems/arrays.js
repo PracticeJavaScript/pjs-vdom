@@ -389,25 +389,24 @@ export default [
     name: 'Array.every()',
     time: 10,
     prompt: `Return object that returns whether each array contains all even numbers using Array.every().`,
-    given: `
-const evenNumbers = [2, 4, 6, 8];
-const someOddNumbers = [2, 5, 6, 8];
-function isEven(element) {
-}
-return {
-  evenNumbers: evenNumbers.,
-  someOddNumbers: someOddNumbers.
-};`,
-    answer: `
-const evenNumbers = [2, 4, 6, 8];
-const someOddNumbers = [2, 5, 6, 8];
-function isEven(element) {
-  return element % 2 === 0
-}
-return {
-  evenNumbers: evenNumbers.every(isEven),
-  someOddNumbers: someOddNumbers.every(isEven)
-};`,
+    given: `const evenNumbers = [2, 4, 6, 8];
+            const someOddNumbers = [2, 5, 6, 8];
+            function isEven(element) {
+            
+            }
+            return {
+              evenNumbers: evenNumbers.,
+              someOddNumbers: someOddNumbers.
+            };`,
+    answer: `const evenNumbers = [2, 4, 6, 8];
+             const someOddNumbers = [2, 5, 6, 8];
+             function isEven(element) {
+               return element % 2 === 0
+             }
+             return {
+               evenNumbers: evenNumbers.every(isEven),
+               someOddNumbers: someOddNumbers.every(isEven)
+             };`,
     tests: [
       {
         name: 'Correct output',
@@ -438,25 +437,23 @@ return {
     name: 'Array.some()',
     time: 10,
     prompt: `Return 'Object' that returns whether each array contains some odd numbers using 'Array.some()'.`,
-    given: `
-const evenNumbers = [2, 4, 6, 8];
-const someOddNumbers = [2, 4, 7, 8];
-function isOdd(element) {
-}
-return {
-  evenNumbers: evenNumbers.,
-  someOddNumbers: someOddNumbers.
-};`,
-    answer: `
-const evenNumbers = [1, 3, 5, 7];
-const someOddNumbers = [1, 3, 6, 7];
-function isOdd(element) {
-  return element % 2 !== 0;
-}
-return {
-  evenNumbers: evenNumbers.some(isOdd),
-  someOddNumbers: someOddNumbers.some(isOdd)
-};`,
+    given: `const evenNumbers = [2, 4, 6, 8];
+            const someOddNumbers = [2, 4, 7, 8];
+            function isOdd(element) {
+            }
+            return {
+              evenNumbers: evenNumbers.,
+              someOddNumbers: someOddNumbers.
+            };`,
+    answer: `const evenNumbers = [1, 3, 5, 7];
+             const someOddNumbers = [1, 3, 6, 7];
+             function isOdd(element) {
+               return element % 2 !== 0;
+             }
+             return {
+               evenNumbers: evenNumbers.some(isOdd),
+               someOddNumbers: someOddNumbers.some(isOdd)
+             };`,
     tests: [
       {
         name: 'Correct output',
