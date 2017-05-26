@@ -440,6 +440,7 @@ export default [
     given: `const evenNumbers = [2, 4, 6, 8];
             const someOddNumbers = [2, 4, 7, 8];
             function isOdd(element) {
+              
             }
             return {
               evenNumbers: evenNumbers.,
