@@ -9,6 +9,7 @@ import serializePatch from 'vdom-serialized-patch/serialize'
 import fromJson from 'vdom-as-json/fromJson'
 import app from './views/app'
 import chai from 'chai'
+import dedent from 'dedent'
 import initialProblems from './problems/initial'
 
 let currentVDom
@@ -16,6 +17,7 @@ let renderCount = 0
 
 let problems = []
 problems.push(...initialProblems)
+problems = dedentStrings(problems)
 
 
 // STATE OBJECT
@@ -34,6 +36,17 @@ let state = {
 
 // APP METHODS
 // ============================================================
+
+// PROBLEM TEMPLATE NICE-IFICATION
+// ============================================================
+
+function dedentStrings(problems) {
+  return problems.map(prob => {
+    prob.given = dedent(prob.given)
+    prob.answer = dedent(prob.answer)
+    return prob
+  });
+}
 
 // PROBLEM NAVIGATION
 // ============================================================
@@ -153,7 +166,9 @@ self.onmessage = ({data}) => {
       break
     }
     case 'newproblems': {
-      problems.push(...payload.default)
+      const newProbs = dedentStrings(payload.default)
+      problems.push(...newProbs)
+
       // todo: show a toast that new content has been loaded for them
       break
     }
