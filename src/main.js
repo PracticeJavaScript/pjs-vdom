@@ -141,7 +141,8 @@ document.body.addEventListener('keydown', (event) => {
   }
 })
 
-document.querySelector("textarea").addEventListener('keydown', function(event) {
+// allow tabs to indent within textarea
+code.addEventListener('keydown', function(event) {
   if(event.keyCode === 9) { // tab was pressed
     // get caret position/selection
     var start = this.selectionStart;
