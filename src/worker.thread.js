@@ -10,12 +10,10 @@ import fromJson from 'vdom-as-json/fromJson'
 import app from './views/app'
 import chai from 'chai'
 import dedent from 'dedent'
-import r from 'random-js'
 import initialProblems from './problems/initial'
 
 let currentVDom
 let renderCount = 0
-let random = r();
 
 let problems = []
 problems.push(...dedentStrings(initialProblems))
@@ -56,7 +54,7 @@ function getNextProblemIndex(currIndex, length) {
   let newIndex;
   // if shuffle on, return new random index
   if (state.shuffle) {
-    newIndex = random.integer(0, length)
+    newIndex = Math.floor(Math.random() * length)
   } else {
     // if at the end of the problems array, go to the start
     if (state.currentProblemIndex === problems.length -1) {
