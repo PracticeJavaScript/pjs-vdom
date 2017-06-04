@@ -20,8 +20,8 @@ export default (state) => {
           <h1>Practice JavaScript!</h1>
         </div>
         <nav>
-          <button data-click={{type: 'shuffle'}} className={state.shuffle ? 'active' : ''}>shuffle</button>
-          <button data-click={{type: 'next'}} data-keybinding={{type: 'next'}}> &gt; </button>
+          {/*<button data-click={{type: 'shuffle'}} className={state.shuffle ? 'active' : ''}>shuffle</button>*/}
+          <button data-click={{type: 'next'}} data-keybinding={{type: 'next'}} title="NEXT"> &gt; </button>
         </nav>
       </heading>
       {page}
