@@ -11,3 +11,6 @@ This version uses virtual-dom and web workers.
 - Made on top of feather-app, which was created by [@HenrikJoreteg](http://twitter.com/henrikjoreteg).
 
 Pull Requests welcome!
+
+Problems content comes from [`pjs-problems`](https://github.com/PracticeJavaScript/pjs-problems).
+Make content PR's there to contribute more sweet JavaScript problems
