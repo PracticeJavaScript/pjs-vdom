@@ -18,8 +18,7 @@ let renderCount = 0
 let random = r();
 
 let problems = []
-problems.push(...initialProblems)
-problems = dedentStrings(problems)
+problems.push(...dedentStrings(initialProblems))
 
 
 // STATE OBJECT
@@ -57,7 +56,7 @@ function getNextProblemIndex(currIndex, length) {
   let newIndex;
   // if shuffle on, return new random index
   if (state.shuffle) {
-    newIndex = random(0, length)
+    newIndex = random.integer(0, length)
   } else {
     // if at the end of the problems array, go to the start
     if (state.currentProblemIndex === problems.length -1) {
@@ -155,18 +154,16 @@ self.onmessage = ({data}) => {
       state.problem.tests = testSuite(state.problem.given, state.problem)
       break
     }
-    // case 'shuffle': {
-    //   state.shuffle = !state.shuffle
-    //   break
-    // }
+    case 'shuffle': {
+      state.shuffle = !state.shuffle
+      break
+    }
     case 'codeupdate': {
       state.problem.tests = testSuite(payload, state.problem)
       break
     }
     case 'newproblems': {
-      const newProbs = dedentStrings(payload)
-      problems.push(...newProbs)
-
+      problems.push(...dedentStrings(payload))
       // todo: show a toast that new content has been loaded for them
       break
     }
