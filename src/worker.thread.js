@@ -10,10 +10,12 @@ import fromJson from 'vdom-as-json/fromJson'
 import app from './views/app'
 import chai from 'chai'
 import dedent from 'dedent'
+import r from 'random-js'
 import initialProblems from './problems/initial'
 
 let currentVDom
 let renderCount = 0
+let random = r();
 
 let problems = []
 problems.push(...initialProblems)
@@ -55,7 +57,7 @@ function getNextProblemIndex(currIndex, length) {
   let newIndex;
   // if shuffle on, return new random index
   if (state.shuffle) {
-    newIndex = Math.floor(Math.random() * length)
+    newIndex = random(0, length)
   } else {
     // if at the end of the problems array, go to the start
     if (state.currentProblemIndex === problems.length -1) {
@@ -123,13 +125,10 @@ function testSuite(input = 'undefined', problem) {
 self.onmessage = ({data}) => {
   const { type, payload } = data
 
-  // console.log('worker got message:', data)
-
   // handle different event types
   // update the state accordingly
   switch (type) {
     case 'start': {
-      // console.log('payload.localState:', payload.localState);
       currentVDom = fromJson(payload.virtualDom)
       if (payload.localState) {
         state.shuffle = payload.localState.shuffle
@@ -156,17 +155,16 @@ self.onmessage = ({data}) => {
       state.problem.tests = testSuite(state.problem.given, state.problem)
       break
     }
-    case 'shuffle': {
-      state.shuffle = !state.shuffle
-      break
-    }
+    // case 'shuffle': {
+    //   state.shuffle = !state.shuffle
+    //   break
+    // }
     case 'codeupdate': {
-      // console.log('payload:', payload);
       state.problem.tests = testSuite(payload, state.problem)
       break
     }
     case 'newproblems': {
-      const newProbs = dedentStrings(payload.default)
+      const newProbs = dedentStrings(payload)
       problems.push(...newProbs)
 
       // todo: show a toast that new content has been loaded for them
@@ -179,7 +177,6 @@ self.onmessage = ({data}) => {
   // ============================================================
 
   // just for fun
-  console.log('state:', state)
   // serialize the state, and delete reversible big bits so we can save in localstorage
   let tinyState = {
     shuffle: state.shuffle,

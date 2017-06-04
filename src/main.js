@@ -11,15 +11,11 @@ import { getLocalPathname } from 'local-links'
 import { debounce } from './helpers'
 import './styles/main.styl'
 import {assert} from 'chai'
+// import probs from 'pjs-problems'
 
 
 // CONFIG
 // ============================================================
-
-// problem sets to lazy-load in
-const problemSets = [
-  'arrays'
-]
 
 // Keys to ignore while user is navigating around the textarea but not changing any code
 const ignoreKeyCodes = [
@@ -176,13 +172,18 @@ code.addEventListener('keyup', debouncedCodeUpdate)
 
 // Lazy-load the rest of the content after the app's booted
 function lazyLoadContent() {
-  problemSets.forEach(setName => {
-    require.ensure([], () => {
-      let problems = require(`./problems/${setName}`)
-      // console.log('newProblemArray:', problems);
-      worker.postMessage({type: 'newproblems', payload: problems})
+  require.ensure([], () => {
+    const probs = require('pjs-problems')
+    const problems = [];
+    Object.entries(probs).forEach(subject => {
+      // send all content except initial, since we already have it
+      if (subject[0] !== 'initial') {
+        problems.push(...subject[1])
+      }
     })
+    worker.postMessage({type: 'newproblems', payload: problems})
   })
 }
+// lazy-load that additional problem content
 lazyLoadContent()
 // window.addEventListener('load', lazyLoadContent)
