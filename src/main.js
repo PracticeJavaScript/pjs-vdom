@@ -175,8 +175,6 @@ function lazyLoadContent() {
   require.ensure([], () => {
     const probs = require('pjs-problems');
     const problems = [];
-    console.log('probs:', probs);
-
     Object.entries(probs).forEach(subject => {
       // send all content except initial, since we already have it
       if (subject[0] !== 'initial') {
