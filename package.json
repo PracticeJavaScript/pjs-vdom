@@ -21,7 +21,6 @@
     "chai": "^3.5.0"
   },
   "devDependencies": {
-    "babel": "^6.1.18",
     "babel-core": "^6.24.1",
     "babel-loader": "^6.2.0",
     "babel-plugin-h-children-fix": "^1.1.0",
@@ -41,7 +40,7 @@
     "http-serve": "^1.0.1",
     "json-loader": "^0.5.4",
     "local-links": "^1.4.0",
-    "pjs-problems": "^1.0.4",
+    "pjs-problems": "^2.0.1",
     "postcss-loader": "^0.8.0",
     "script-loader": "^0.6.1",
     "standard": "^5.4.1",
