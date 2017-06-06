@@ -40,7 +40,7 @@
     "http-serve": "^1.0.1",
     "json-loader": "^0.5.4",
     "local-links": "^1.4.0",
-    "pjs-problems": "^2.0.1",
+    "pjs-problems": "^3.0.0",
     "postcss-loader": "^0.8.0",
     "script-loader": "^0.6.1",
     "standard": "^5.4.1",
