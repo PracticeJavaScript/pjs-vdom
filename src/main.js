@@ -173,7 +173,7 @@ code.addEventListener('keyup', debouncedCodeUpdate)
 // Lazy-load the rest of the content after the app's booted
 function lazyLoadContent() {
   require.ensure([], () => {
-    const probs = require('pjs-problems').es5;
+    const probs = require('pjs-problems');
     const problems = [];
     Object.entries(probs).forEach(subject => {
       // send all content except initial, since we already have it
