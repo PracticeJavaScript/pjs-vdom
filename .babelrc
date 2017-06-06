@@ -3,6 +3,7 @@
     ["env"]
   ],
   "plugins": [
+    "transform-es2015-template-literals",
     ["transform-react-jsx", {"pragma": "h"}],
     "h-children-fix"
   ]

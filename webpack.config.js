@@ -1,10 +1,10 @@
-require('babel-register')
+require('babel-core/register')
 const getConfig = require('hjs-webpack')
 const toHtml = require('vdom-to-html')
 const app = require('./src/views/app').default
-// const UglifyEsPlugin = require('uglify-es-webpack-plugin');
+const UglifyEsPlugin = require('uglify-es-webpack-plugin');
 
-module.exports = getConfig({
+const config = getConfig({
   in: 'src/main.js',
   out: 'public',
   clearBeforeBuild: true,
@@ -32,3 +32,5 @@ module.exports = getConfig({
 //     new UglifyEsPlugin()
 //   ]);
 // }
+
+module.exports = config;
