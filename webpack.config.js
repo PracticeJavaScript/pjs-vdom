@@ -2,7 +2,7 @@ require('babel-register')
 const getConfig = require('hjs-webpack')
 const toHtml = require('vdom-to-html')
 const app = require('./src/views/app').default
-const UglifyEsPlugin = require('uglify-es-webpack-plugin');
+// const UglifyEsPlugin = require('uglify-es-webpack-plugin');
 
 module.exports = getConfig({
   in: 'src/main.js',
@@ -26,9 +26,9 @@ module.exports = getConfig({
   }
 })
 
-if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = 'source-map';
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    new UglifyEsPlugin()
-  ]);
-}
+// if (process.env.NODE_ENV === 'production') {
+//   module.exports.devtool = 'source-map';
+//   module.exports.plugins = (module.exports.plugins || []).concat([
+//     new UglifyEsPlugin()
+//   ]);
+// }
