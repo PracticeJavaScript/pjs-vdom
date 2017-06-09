@@ -2,9 +2,10 @@ require('babel-core/register')
 const getConfig = require('hjs-webpack')
 const toHtml = require('vdom-to-html')
 const app = require('./src/views/app').default
-const UglifyEsPlugin = require('uglify-es-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+// const UglifyEsPlugin = require('uglify-es-webpack-plugin');
 
-const config = getConfig({
+let config = getConfig({
   in: 'src/main.js',
   out: 'public',
   clearBeforeBuild: true,
@@ -32,5 +33,10 @@ const config = getConfig({
 //     new UglifyEsPlugin()
 //   ]);
 // }
+console.log('config:', config);
+
+// config.plugins = (module.exports.plugins || []).concat([
+//   // new FaviconsWebpackPlugin('./src/img/monitor.svg')
+// ]);
 
 module.exports = config;
