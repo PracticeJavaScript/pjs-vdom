@@ -39,6 +39,7 @@
     "local-links": "^1.4.0",
     "pjs-problems": "^3.0.0",
     "postcss-loader": "^0.8.0",
+    "pwa-manifest-webpack-plugin": "^1.0.5",
     "script-loader": "^0.6.1",
     "standard": "^5.4.1",
     "style-loader": "^0.13.0",
