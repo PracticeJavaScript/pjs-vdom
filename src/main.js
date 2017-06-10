@@ -133,6 +133,7 @@ document.body.addEventListener('click', (event) => {
 // to bind the keyboard shortcuts, with different de-bounce for each
 document.body.addEventListener('keydown', (event) => {
   if (event.keyCode === 13 && !event.shiftKey && (event.metaKey || event.ctrlKey)) {
+    event.preventDefault();
     worker.postMessage({type: 'next'})
   }
 })

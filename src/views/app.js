@@ -1,5 +1,5 @@
 import home from './home'
-import about from './about'
+// import about from './about'
 import footer_partial from './footer'
 
 export default (state) => {
@@ -9,9 +9,10 @@ export default (state) => {
 
   if (url === '/') {
     page = home(state)
-  } else if (url === '/about') {
-    page = about(state)
   }
+  // else if (url === '/about') {
+  //   page = about(state)
+  // }
 
   return (
     <main>
