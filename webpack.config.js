@@ -138,7 +138,7 @@ config.plugins.push(
   new FaviconsWebpackPlugin({
     title: 'Practice-JavaScript',
     description: 'Practice JavaScript with this fun app',
-    logo: './src/img/pjs3.png',
+    logo: './src/img/pjs4.png',
     prefix: 'icons/',
     // start_url: '/index.html?utm_source=homescreen',
     background: '#FFC800',
