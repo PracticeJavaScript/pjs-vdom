@@ -13,6 +13,7 @@ export default (state) => {
         </div>
         <div className="code-area">
           <div className="label">Code</div>
+          <label htmlFor="code" className="a11y-hide">Code</label>
           <textarea name="code" id="code" cols="100" rows="10" data-codeupdate={{type: 'codeupdate'}} value={state.problem.given || ''}></textarea>
           <div className="output">
             <div className="label">Output</div>

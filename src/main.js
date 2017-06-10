@@ -11,7 +11,7 @@ import { getLocalPathname } from 'local-links'
 import { debounce } from './helpers'
 import './styles/main.styl'
 import {assert} from 'chai'
-// import probs from 'pjs-problems'
+import probs from 'pjs-problems'
 
 
 // CONFIG
@@ -173,8 +173,8 @@ code.addEventListener('keyup', debouncedCodeUpdate)
 
 // Lazy-load the rest of the content after the app's booted
 function lazyLoadContent() {
-  require.ensure([], () => {
-    const probs = require('pjs-problems');
+  // require.ensure([], () => {
+    // const probs = require('pjs-problems');
     const problems = [];
     Object.entries(probs).forEach(subject => {
       // send all content except initial, since we already have it
@@ -183,7 +183,7 @@ function lazyLoadContent() {
       }
     })
     worker.postMessage({type: 'newproblems', payload: problems})
-  })
+  // })
 }
 // lazy-load that additional problem content
 lazyLoadContent();

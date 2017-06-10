@@ -5,6 +5,7 @@ const toHtml = require('vdom-to-html')
 const app = require('./src/views/app').default
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const PwaManifestWebpackPlugin = require('pwa-manifest-webpack-plugin');
 
 let config = getConfig({
   in: 'src/main.js',
@@ -41,14 +42,16 @@ let config = getConfig({
         html: toHtml(app(state)),
         charset: 'utf-8',
         title: 'Practice JavaScript with this fun game!',
-        metaViewport: {
-          userScalable: true
-        },
+        // metaViewport: {
+        //   userScalable: true
+        // },
+        head: `
+          <link rel="manifest" href="/manifest.json">
+          <link rel="icon" href="/icons/favicon.ico">
+        `,
         metaTags: {
           // viewport: 'width=device-width, initial-scale=1'
           'theme-color': '#FFC800',
-          // <link rel="manifest" href="/manifest.json">
-          // <link rel="icon" href="/launch-icon.svg">
           // OPEN GRAPH STUFF
           'og:title': 'Practice JavaScript!',
           'og:description': 'Practice JavaScript with this fun game!',
@@ -66,13 +69,95 @@ let config = getConfig({
       });
     }
     return {
-      'index.html': render({url: '/', problem: {tests: []}})
+      'index.html': render({url: '/', problem: {tests: []}}),
+      'manifest.json': `{
+        "name": "Practice-JavaScript",
+        "short_name": "PracticeJS",
+        "description": "Practice JavaScript with this fun game!",
+        "dir": "auto",
+        "lang": "en-US",
+        "display": "standalone",
+        "orientation": "any",
+        "start_url": "/index.html",
+        "background_color": "#FFC800",
+        "theme_color": "#FFC800",
+        "display": "minimal-ui",
+        "icons": [
+          {
+            "src": "/icons/android-chrome-36x36.png",
+            "sizes": "36x36",
+            "type": "image/png"
+          },
+          {
+            "src": "/icons/android-chrome-48x48.png",
+            "sizes": "48x48",
+            "type": "image/png"
+          },
+          {
+            "src": "/icons/android-chrome-72x72.png",
+            "sizes": "72x72",
+            "type": "image/png"
+          },
+          {
+            "src": "/icons/android-chrome-96x96.png",
+            "sizes": "96x96",
+            "type": "image/png"
+          },
+          {
+            "src": "/icons/android-chrome-144x144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+          },
+          {
+            "src": "/icons/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+          },
+          {
+            "src": "/icons/android-chrome-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+          },
+          {
+            "src": "/icons/android-chrome-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+          },
+          {
+            "src": "/icons/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+          }
+        ]
+      }`
     }
   }
 })
 
 config.plugins.push(
-  new FaviconsWebpackPlugin('./src/img/pjs.png'),
+  new FaviconsWebpackPlugin({
+    title: 'Practice-JavaScript',
+    description: 'Practice JavaScript with this fun app',
+    logo: './src/img/pjs4.png',
+    prefix: 'icons/',
+    // start_url: '/index.html?utm_source=homescreen',
+    background: '#FFC800',
+    theme_color: '#FFC800',
+    display: 'minimal-ui',
+    inject: false,
+    icons: {
+      android: true,
+      appleIcon: true,
+      appleStartup: true,
+      coast: false,
+      favicons: true,
+      firefox: true,
+      opengraph: true,
+      twitter: false,
+      yandex: false,
+      windows: false
+    }
+  }),
   new SWPrecacheWebpackPlugin(
       {
         cacheId: 'practice-javascript',
