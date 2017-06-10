@@ -72,7 +72,7 @@ let config = getConfig({
       'index.html': render({url: '/', problem: {tests: []}}),
       'manifest.json': `{
         "name": "Practice-JavaScript",
-        "short_name": "Practice-JavaScript",
+        "short_name": "PracticeJS",
         "description": "Practice JavaScript with this fun game!",
         "dir": "auto",
         "lang": "en-US",
