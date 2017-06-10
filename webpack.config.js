@@ -42,9 +42,9 @@ let config = getConfig({
         html: toHtml(app(state)),
         charset: 'utf-8',
         title: 'Practice JavaScript with this fun game!',
-        metaViewport: {
-          userScalable: true
-        },
+        // metaViewport: {
+        //   userScalable: true
+        // },
         head: `
           <link rel="manifest" href="/manifest.json">
           <link rel="icon" href="/icons/favicon.ico">
