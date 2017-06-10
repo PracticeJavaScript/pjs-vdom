@@ -186,5 +186,12 @@ function lazyLoadContent() {
   })
 }
 // lazy-load that additional problem content
-lazyLoadContent()
+lazyLoadContent();
 // window.addEventListener('load', lazyLoadContent)
+
+// register service worker
+(function() {
+  if('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+  }
+})();

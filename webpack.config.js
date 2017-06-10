@@ -1,10 +1,10 @@
 require('babel-core/register')
+const path = require('path')
 const getConfig = require('hjs-webpack')
 const toHtml = require('vdom-to-html')
 const app = require('./src/views/app').default
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const UglifyEsPlugin = require('uglify-es-webpack-plugin');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 
 let config = getConfig({
   in: 'src/main.js',
@@ -31,6 +31,7 @@ let config = getConfig({
     hints: "error"
   },
   output: {
+    path: path.resolve(__dirname, 'public/'),
     filename: '[name].[hash].bundle.js',
     chunkFilename: '[id].[hash].chunk.js'
   },
@@ -70,17 +71,15 @@ let config = getConfig({
   }
 })
 
-// if (process.env.NODE_ENV === 'production') {
-//   module.exports.devtool = 'source-map';
-//   module.exports.plugins = (module.exports.plugins || []).concat([
-//     new UglifyEsPlugin()
-//   ]);
-// }
-// console.log('config:', config);
-
 config.plugins.push(
-  new FaviconsWebpackPlugin('./src/img/pjs.png')
-  // new HtmlWebpackPlugin()
+  new FaviconsWebpackPlugin('./src/img/pjs.png'),
+  new SWPrecacheWebpackPlugin(
+      {
+        cacheId: 'practice-javascript',
+        filename: 'sw.js',
+        mergeStaticsConfig: true, // if you don't set this to true, you won't see any webpack-emitted assets in your serviceworker config
+      }
+    )
 );
 
 module.exports = config;
