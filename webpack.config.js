@@ -78,6 +78,7 @@ config.plugins.push(
         cacheId: 'practice-javascript',
         filename: 'sw.js',
         mergeStaticsConfig: true, // if you don't set this to true, you won't see any webpack-emitted assets in your serviceworker config
+        staticFileGlobsIgnorePatterns: [/icons*\/*/]
       }
     )
 );
