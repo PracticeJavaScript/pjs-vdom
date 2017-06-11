@@ -4,6 +4,9 @@
   "author": "Jakob Anderson",
   "license": "MIT",
   "main": "index.js",
+  "engines": {
+    "node": "7"
+  },
   "scripts": {
     "build": "webpack",
     "serve": "npm run build && ./node_modules/.bin/http-serve ./public",
