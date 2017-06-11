@@ -1,0 +1,13 @@
+dist: trusty
+
+sudo: required
+
+language: node_js
+
+node_js:
+  - "node"
+  - "7"
+
+notifications:
+  rooms:
+    slack: practicejavascript:ctLDDjmYn6VCGc2kcbkoWGy8#bots
