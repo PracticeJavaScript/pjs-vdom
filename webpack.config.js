@@ -47,7 +47,7 @@ let config = getConfig({
         // },
         head: `
           <link rel="manifest" href="/manifest.json">
-          <link rel="icon" href="/icons/favicon.ico">
+          <link rel="icon" href="/icons/firefox_app_60x60.png">
         `,
         metaTags: {
           // viewport: 'width=device-width, initial-scale=1'
@@ -138,7 +138,7 @@ config.plugins.push(
   new FaviconsWebpackPlugin({
     title: 'Practice-JavaScript',
     description: 'Practice JavaScript with this fun app',
-    logo: './src/img/pjs4.png',
+    logo: './src/img/pjs5.png',
     prefix: 'icons/',
     // start_url: '/index.html?utm_source=homescreen',
     background: '#FFC800',
