@@ -26,10 +26,11 @@ problems.push(...dedentStrings(initialProblems))
 // as a plain object
 let state = {
   currentProblemIndex: 0, // start with first index
+  events: [],
   problem: problems[0],   // start with first problem
-  testsPass: false,
   shuffle: true,
-  url: '/'
+  testsPass: false,
+  url: '/',
 }
 
 
@@ -110,6 +111,19 @@ function testSuite(input = 'undefined', problem) {
 
   // "all tests pass", set it in state
   state.testsPass = testResultBooleans.every((result => result === true))
+  // have main thread play testpass sound when it catches the next change diff
+  if (state.testsPass === true) {
+    const soundObj = {
+      name: 'sound', data: {
+        id: 'pass'
+      }
+    };
+    state.events.push(soundObj)
+  } else {
+    state.events = state.events.filter(item => {
+      return !(item.name === 'sound' && item.data.id === 'pass')
+    })
+  }
   return problemWithTestFeedback
 }
 
@@ -179,6 +193,9 @@ self.onmessage = ({data}) => {
   }
   const serializedState = JSON.stringify(tinyState)
 
+  // state events to pass to main thread
+  let stateEvents = state.events || null;
+
   // our entire app in one line:
   const newVDom = app(state)
 
@@ -190,5 +207,5 @@ self.onmessage = ({data}) => {
   currentVDom = newVDom
 
   // send patches and current url back to the main thread
-  self.postMessage({url: state.url, payload: serializePatch(patches), serializedState})
+  self.postMessage({url: state.url, payload: serializePatch(patches), serializedState, stateEvents})
 }

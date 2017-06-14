@@ -63,7 +63,13 @@ const rootElement = document.body.firstChild
 // the real DOM. We do this on a requestAnimationFrame
 // for minimal impact
 worker.onmessage = ({data}) => {
-  const { url, payload, serializedState } = data
+  const { url, payload, serializedState, stateEvents } = data
+  if (stateEvents) {
+    stateEvents.forEach(evt => {
+      const event = new CustomEvent(evt.name, { detail: evt.data });
+      window.dispatchEvent(event);
+    })
+  }
   requestAnimationFrame(() => {
     applyPatch(rootElement, payload)
   })
@@ -170,6 +176,15 @@ const debouncedCodeUpdate = debounce(event => {
 // Listen for keyup events in code textarea
 // to auto-submit the code in textarea for test validation,
 code.addEventListener('keyup', debouncedCodeUpdate)
+
+// catch updates, fire sounds when needed
+window.addEventListener('sound', e => {
+  if (e.detail && e.detail) {
+    const audio = document.getElementById(`sound-${e.detail.id}`);
+    audio.currentTime = 0;
+    audio.play();
+  }
+});
 
 // Lazy-load the rest of the content after the app's booted
 function lazyLoadContent() {
