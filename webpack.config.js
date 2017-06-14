@@ -1,11 +1,12 @@
 require('babel-core/register')
-const path = require('path')
-const getConfig = require('hjs-webpack')
-const toHtml = require('vdom-to-html')
-const app = require('./src/views/app').default
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const path                     = require('path')
+const getConfig                = require('hjs-webpack')
+const toHtml                   = require('vdom-to-html')
+const app                      = require('./src/views/app').default
+const FaviconsWebpackPlugin    = require('favicons-webpack-plugin');
+const SWPrecacheWebpackPlugin  = require('sw-precache-webpack-plugin');
 const PwaManifestWebpackPlugin = require('pwa-manifest-webpack-plugin');
+const CopyWebpackPlugin        = require('copy-webpack-plugin');
 
 let config = getConfig({
   in: 'src/main.js',
@@ -165,7 +166,13 @@ config.plugins.push(
         mergeStaticsConfig: true, // if you don't set this to true, you won't see any webpack-emitted assets in your serviceworker config
         staticFileGlobsIgnorePatterns: [/icons*\/*/]
       }
-    )
+    ),
+  new CopyWebpackPlugin([
+    {
+      from: 'src/sound/magic-wand-3.m4a',
+      to: 'sound/magic-wand-3.m4a'
+    }
+  ])
 );
 
 module.exports = config;

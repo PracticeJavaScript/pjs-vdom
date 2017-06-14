@@ -21,6 +21,7 @@ export default (state) => {
           </div>
         </div>
       </div>
+      <audio id="sound-pass" src="/sound/magic-wand-3.m4a" type='audio/mp4'></audio>
     </div>
   )
 }
