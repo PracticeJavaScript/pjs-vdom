@@ -10,13 +10,21 @@ import fromJson from 'vdom-as-json/fromJson'
 import app from './views/app'
 import chai from 'chai'
 import dedent from 'dedent'
-import initialProblems from './problems/initial'
+// import initialProblems from './problems/initial'
+import probbs from 'pjs-problems'
 
 let currentVDom
 let renderCount = 0
 
-let problems = []
-problems.push(...dedentStrings(initialProblems))
+// merge all the problem categories for now, until we have user-driven filtering
+let problems = Object.entries(probbs)
+  .map(item => item[1])
+  .reduce((curr,next) => {
+    return curr.concat(next);
+  });
+
+// dedent the code strings in problems
+problems = dedentStrings(problems);
 
 
 // STATE OBJECT
@@ -27,7 +35,7 @@ problems.push(...dedentStrings(initialProblems))
 let state = {
   currentProblemIndex: 0, // start with first index
   events: [],
-  problem: problems[0],   // start with first problem
+  problem: null,   // start with first problem
   shuffle: true,
   testsPass: false,
   url: '/',
