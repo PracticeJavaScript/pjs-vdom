@@ -187,21 +187,21 @@ window.addEventListener('sound', e => {
 });
 
 // Lazy-load the rest of the content after the app's booted
-function lazyLoadContent() {
-  // require.ensure([], () => {
-    // const probs = require('pjs-problems');
-    const problems = [];
-    Object.entries(probs).forEach(subject => {
-      // send all content except initial, since we already have it
-      if (subject[0] !== 'initial') {
-        problems.push(...subject[1])
-      }
-    })
-    worker.postMessage({type: 'newproblems', payload: problems})
-  // })
-}
-// lazy-load that additional problem content
-lazyLoadContent();
+// function lazyLoadContent() {
+//   // require.ensure([], () => {
+//     // const probs = require('pjs-problems');
+//     const problems = [];
+//     Object.entries(probs).forEach(subject => {
+//       // send all content except initial, since we already have it
+//       if (subject[0] !== 'initial') {
+//         problems.push(...subject[1])
+//       }
+//     })
+//     worker.postMessage({type: 'newproblems', payload: problems})
+//   // })
+// }
+// // lazy-load that additional problem content
+// lazyLoadContent();
 // window.addEventListener('load', lazyLoadContent)
 
 // register service worker
