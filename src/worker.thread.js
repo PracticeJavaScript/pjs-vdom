@@ -194,7 +194,7 @@ self.onmessage = ({data}) => {
   const serializedState = JSON.stringify(tinyState)
 
   // state events to pass to main thread
-  let stateEvents = state.events || null;
+  const stateEvents = state.events || null;
 
   // our entire app in one line:
   const newVDom = app(state)
