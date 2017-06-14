@@ -179,7 +179,7 @@ code.addEventListener('keyup', debouncedCodeUpdate)
 
 // catch updates, fire sounds when needed
 window.addEventListener('sound', e => {
-  if (e.detail && e.detail) {
+  if (e.detail) {
     const audio = document.getElementById(`sound-${e.detail.id}`);
     audio.currentTime = 0;
     audio.play();
