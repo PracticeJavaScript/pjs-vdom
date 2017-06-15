@@ -12,6 +12,7 @@ import { debounce } from './helpers'
 import './styles/main.styl'
 import {assert} from 'chai'
 import probs from 'pjs-problems'
+import analytics from './analytics' // to include analytics snippets into bundle
 
 
 // CONFIG
@@ -19,11 +20,12 @@ import probs from 'pjs-problems'
 
 // Keys to ignore while user is navigating around the textarea but not changing any code
 const ignoreKeyCodes = [
-  9, // Tab
+  9,  // Tab
+  16, // Shift
   37, // Left arrow
   39, // Right arrow
   38, // Up arrow
-  40 // Down arrow
+  40  // Down arrow
 ];
 
 // LOCAL STATE PERSIST
@@ -183,6 +185,14 @@ window.addEventListener('sound', e => {
     const audio = document.getElementById(`sound-${e.detail.id}`);
     audio.currentTime = 0;
     audio.play();
+  }
+});
+
+// catch updates, fire ga events when needed
+window.addEventListener('ga', e => {
+  if (e.detail) {
+    // console.log('e.detail:', e.detail);
+    ga('send', e.detail);
   }
 });
 

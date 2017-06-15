@@ -127,9 +127,24 @@ function testSuite(input = 'undefined', problem) {
       }
     };
     state.events.push(soundObj)
+    const analyticsObj = {
+      name: 'ga',
+      data: {
+        hitType: 'event',
+        eventLabel: 'Problem',
+        eventCategory: state.problem.name,
+        eventAction: 'solved'
+      }
+    };
+    state.events.push(analyticsObj);
   } else {
+    // remove success sound event
     state.events = state.events.filter(item => {
       return !(item.name === 'sound' && item.data.id === 'pass')
+    })
+    // remove ga event
+    state.events = state.events.filter(item => {
+      return !(item.name === 'ga' && item.data.eventAction === 'solved')
     })
   }
   return problemWithTestFeedback
@@ -151,38 +166,70 @@ self.onmessage = ({data}) => {
       currentVDom = fromJson(payload.virtualDom)
       if (payload.localState) {
         state.shuffle = payload.localState.shuffle
-        // will bring back the last problem they were on
-        state.problem = payload.localState.problem || false
       }
       state.url = state.url || payload.url
-      // if we didn't recover a saved problem from localstorage, go get a new one!
-      if (!state.problem) {
-        state.problem = state.shuffle
-          ? problems[getNextProblemIndex(state.currentProblemIndex, problems.length)]
-          : problems[0]
-      }
+      // go get a new problem!
+      state.problem = state.shuffle
+        ? problems[getNextProblemIndex(state.currentProblemIndex, problems.length)]
+        : problems[0]
       state.problem.tests = testSuite(state.problem.given, state.problem)
+      state.events = []
+      const analyticsStartObj = {
+        name: 'ga',
+        data: {
+          hitType: 'event',
+          eventLabel: 'Started',
+          eventCategory: state.problem && state.problem.name,
+          eventAction: 'started_at'
+        }
+      };
+      state.events.push(analyticsStartObj);
       break
     }
     case 'setUrl': {
       state.url = payload
+      state.events = []
       break
     }
     case 'next': {
       state.problem = getNextProblem(problems)
       state.testsPass = false
+      state.events = []
+      const analyticsNavObj = {
+      name: 'ga',
+        data: {
+          hitType: 'event',
+          eventLabel: 'Navigation',
+          eventCategory: state.problem && state.problem.name,
+          eventAction: 'navigated_to'
+        }
+      };
+      state.events.push(analyticsNavObj);
       state.problem.tests = testSuite(state.problem.given, state.problem)
       break
     }
     case 'shuffle': {
       state.shuffle = !state.shuffle
+      state.events = []
+      const analyticsShuffleObj = {
+      name: 'ga',
+        data: {
+          hitType: 'event',
+          eventLabel: 'Configuration',
+          eventCategory: state.shuffle,
+          eventAction: 'shuffle_pressed'
+        }
+      };
+      state.events.push(analyticsShuffleObj);
       break
     }
     case 'codeupdate': {
+      state.events = []
       state.problem.tests = testSuite(payload, state.problem)
       break
     }
     case 'newproblems': {
+      state.events = []
       problems.push(...dedentStrings(payload))
       // todo: show a toast that new content has been loaded for them
       break
@@ -196,8 +243,7 @@ self.onmessage = ({data}) => {
   // just for fun
   // serialize the state, and delete reversible big bits so we can save in localstorage
   let tinyState = {
-    shuffle: state.shuffle,
-    problem: state.problem
+    shuffle: state.shuffle
   }
   const serializedState = JSON.stringify(tinyState)
 
