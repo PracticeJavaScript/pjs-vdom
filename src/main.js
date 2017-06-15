@@ -12,6 +12,7 @@ import { debounce } from './helpers'
 import './styles/main.styl'
 import {assert} from 'chai'
 import probs from 'pjs-problems'
+import analytics from './analytics' // to include analytics snippets into bundle
 
 
 // CONFIG

@@ -1,11 +1,10 @@
 import home from './home'
 // import about from './about'
-import footer_partial from './footer'
+import footer from './footer'
 
 export default (state) => {
   const { url } = state
   let page
-  let footer = footer_partial(state)
 
   if (url === '/') {
     page = home(state)
@@ -26,7 +25,7 @@ export default (state) => {
         </nav>
       </heading>
       {page}
-      {footer}
+      {footer()}
     </main>
   )
 }
