@@ -22,10 +22,14 @@ import analytics from './analytics' // to include analytics snippets into bundle
 const ignoreKeyCodes = [
   9,  // Tab
   16, // Shift
+  17, // Ctrl
+  18, // Option
   37, // Left arrow
   39, // Right arrow
   38, // Up arrow
-  40  // Down arrow
+  40, // Down arrow
+  91, // CMD-left
+  93, // CMD-right
 ];
 
 // LOCAL STATE PERSIST
