@@ -8,12 +8,29 @@
     "node": "7"
   },
   "scripts": {
+    "test": "jest --coverage",
     "build": "webpack",
     "serve": "npm run build && ./node_modules/.bin/http-serve ./public",
     "deploy": "./node_modules/.bin/firebase deploy",
     "lint": "standard",
     "start": "webpack-dev-server",
     "yolo": "npm run build && npm run deploy"
+  },
+  "jest": {
+    "verbose": true,
+    "testEnvironment": "node",
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
+    "collectCoverageFrom": [
+      "src/*.js",
+      "!src/analytics.js"
+    ],
+    "coverageReporters": [
+      "text",
+      "json",
+      "json-summary",
+      "lcov"
+    ]
   },
   "standard": {
     "globals": [
@@ -39,6 +56,7 @@
     "firebase-tools": "^3.9.0",
     "hjs-webpack": "^5.1.0",
     "http-serve": "^1.0.1",
+    "is": "^3.2.1",
     "json-loader": "^0.5.4",
     "local-links": "^1.4.0",
     "pjs-problems": "^3.0.0",

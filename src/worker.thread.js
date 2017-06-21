@@ -9,7 +9,7 @@ import serializePatch from 'vdom-serialized-patch/serialize'
 import fromJson from 'vdom-as-json/fromJson'
 import app from './views/app'
 import chai from 'chai'
-import dedent from 'dedent'
+import utils from './utils'
 // import initialProblems from './problems/initial'
 import probbs from 'pjs-problems'
 
@@ -24,7 +24,7 @@ let problems = Object.entries(probbs)
   });
 
 // dedent the code strings in problems
-problems = dedentStrings(problems);
+problems = utils.dedentStringsInProblems(problems);
 
 
 // STATE OBJECT
@@ -45,16 +45,6 @@ let state = {
 // APP METHODS
 // ============================================================
 
-// PROBLEM TEMPLATE NICE-IFICATION
-// ============================================================
-
-function dedentStrings(problems) {
-  return problems.map(prob => {
-    prob.given = dedent(prob.given)
-    prob.answer = dedent(prob.answer)
-    return prob
-  });
-}
 
 // PROBLEM NAVIGATION
 // ============================================================
@@ -230,7 +220,7 @@ self.onmessage = ({data}) => {
     }
     case 'newproblems': {
       state.events = []
-      problems.push(...dedentStrings(payload))
+      problems.push(...utils.dedentStringsInProblems(payload))
       // todo: show a toast that new content has been loaded for them
       break
     }
@@ -262,4 +252,11 @@ self.onmessage = ({data}) => {
 
   // send patches and current url back to the main thread
   self.postMessage({url: state.url, payload: serializePatch(patches), serializedState, stateEvents})
+}
+
+module.exports = {
+  getNextProblemIndex,
+  getNextProblem,
+  evaluate,
+  testSuite
 }

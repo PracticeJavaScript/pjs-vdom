@@ -1,6 +1,19 @@
-// HELPERS
-// ============================================================
+import dedent from 'dedent'
 
+
+// PROBLEM TEMPLATE NICE-IFICATION
+// ============================================================
+function dedentStringsInProblems(problems) {
+  return problems.map(prob => {
+    prob.given = dedent(prob.given)
+    prob.answer = dedent(prob.answer)
+    return prob
+  });
+}
+
+
+// DEBOUNCE UI EVENTS
+// --------------------------------------------------------------------------------
 function debounce(func, wait, immediate) {
   let timeout;
   return function () {
@@ -21,4 +34,7 @@ function debounce(func, wait, immediate) {
   };
 }
 
-export { debounce }
+module.exports = {
+  dedentStringsInProblems,
+  debounce
+}
