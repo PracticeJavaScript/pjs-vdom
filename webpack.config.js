@@ -70,7 +70,13 @@ let config = getConfig({
       });
     }
     return {
-      'index.html': render({url: '/', problem: {tests: []}}),
+      'index.html': render({
+        url: '/',
+        problem: {
+          tests: []
+        },
+        filters: []
+      }),
       'manifest.json': `{
         "name": "Practice-JavaScript",
         "short_name": "PracticeJS",

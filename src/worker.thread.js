@@ -35,12 +35,14 @@ problems = dedentStrings(problems);
 let state = {
   currentProblemIndex: 0, // start with first index
   events: [],
+  filters: ['es5','es6'],
+  // state.problems have the user filters applied to global problems
+  problems: null,
   problem: null,   // start with first problem
   shuffle: true,
   testsPass: false,
   url: '/',
 }
-
 
 // APP METHODS
 // ============================================================
@@ -56,6 +58,18 @@ function dedentStrings(problems) {
   });
 }
 
+
+// PROBLEM FILTERING
+// --------------------------------------------------------------------------------
+
+// Supports single labels here, TODO: support multiple labels
+function filterProblems(problems, filters) {
+  return problems.filter(problem => {
+    return filters.includes(problem.label)
+  })
+}
+
+
 // PROBLEM NAVIGATION
 // ============================================================
 
@@ -63,11 +77,14 @@ function getNextProblemIndex(currIndex, length) {
   let newIndex;
   // if shuffle on, return new random index
   if (state.shuffle) {
-    newIndex = Math.floor(Math.random() * length)
+    newIndex = Math.floor(Math.random() * state.problems.length)
   } else {
     // if at the end of the problems array, go to the start
-    if (state.currentProblemIndex === problems.length -1) {
+    if (state.currentProblemIndex === state.problems.length -1) {
       newIndex = 0
+    // if at higher than current problems length (due to shrinking by filtering), use new random index
+    } else if (state.currentProblemIndex > state.problems.length -1) {
+      newIndex = Math.floor(Math.random() * state.problems.length)
     } else {
       // if not at the end, increment as normal
       newIndex = state.currentProblemIndex + 1
@@ -80,7 +97,10 @@ function getBackProblemIndex(currIndex, length) {
   let newIndex;
   // if at the end of the problems array, go to the start
   if (state.currentProblemIndex === 0) {
-    newIndex = problems.length -1
+    newIndex = state.problems.length -1
+  // if at higher than current problems length (due to shrinking by filtering), use new random index
+  } else if (state.currentProblemIndex > state.problems.length -1) {
+    newIndex = Math.floor(Math.random() * state.problems.length)
   } else {
     // if not at the beginning, decrement as normal
     newIndex = state.currentProblemIndex - 1
@@ -90,14 +110,14 @@ function getBackProblemIndex(currIndex, length) {
 
 function getNextProblem(probs) {
   // set new index to state
-  state.currentProblemIndex = getNextProblemIndex(state.currentProblemIndex, problems.length)
+  state.currentProblemIndex = getNextProblemIndex(state.currentProblemIndex, state.problems.length)
   // return new problem from that index
   return probs[state.currentProblemIndex]
 }
 
 function getBackProblem(probs) {
   // set new index to state
-  state.currentProblemIndex = getBackProblemIndex(state.currentProblemIndex, problems.length)
+  state.currentProblemIndex = getBackProblemIndex(state.currentProblemIndex, state.problems.length)
   // return new problem from that index
   return probs[state.currentProblemIndex]
 }
@@ -185,13 +205,18 @@ self.onmessage = ({data}) => {
       currentVDom = fromJson(payload.virtualDom)
       if (payload.localState) {
         state.shuffle = payload.localState.shuffle
-        state.admin = payload.localState.admin
+        state.admin = payload.localState.admin || state.admin
+        state.filters = payload.localState.filters || state.filters
       }
+      // apply current user-selected filters
+      state.problems = filterProblems(problems, state.filters)
       state.url = state.url || payload.url
+      console.log('state.problems.length:', state.problems.length);
+
       // go get a new problem!
       state.problem = state.shuffle
-        ? problems[getNextProblemIndex(state.currentProblemIndex, problems.length)]
-        : problems[0]
+        ? state.problems[getNextProblemIndex(state.currentProblemIndex, state.problems.length)]
+        : state.problems[0]
       state.problem.tests = testSuite(state.problem.given, state.problem)
       state.events = []
       const analyticsStartObj = {
@@ -212,7 +237,7 @@ self.onmessage = ({data}) => {
       break
     }
     case 'next': {
-      state.problem = getNextProblem(problems)
+      state.problem = getNextProblem(state.problems)
       state.testsPass = false
       state.events = []
       const analyticsNavObj = {
@@ -229,7 +254,7 @@ self.onmessage = ({data}) => {
       break
     }
     case 'back': {
-      state.problem = getBackProblem(problems)
+      state.problem = getBackProblem(state.problems)
       state.testsPass = false
       state.events = []
       const analyticsNavObj = {
@@ -265,12 +290,28 @@ self.onmessage = ({data}) => {
       state.problem.tests = testSuite(payload, state.problem)
       break
     }
-    case 'newproblems': {
-      state.events = []
-      problems.push(...dedentStrings(payload))
-      // todo: show a toast that new content has been loaded for them
+    case 'filter': {
+      if (state.filters.includes(payload)) {
+        // if exists, remove from filters
+        const index = state.filters.indexOf(payload)
+        if (state.filters.length > 1) {
+          state.filters.splice(index, 1)
+        }
+      } else {
+        state.filters.push(payload);
+      }
+      // apply new filters
+      state.problems = filterProblems(problems, state.filters)
+      console.log('state.filters:', state.filters);
       break
     }
+    // won't use again until we lazy-load problems again
+    // case 'newproblems': {
+    //   state.events = []
+    //   problems.push(...dedentStrings(payload))
+    //   // todo: show a toast that new content has been loaded for them
+    //   break
+    // }
     case 'konami': {
       state.admin = payload
       console.log('state.admin:', state.admin);
@@ -281,12 +322,14 @@ self.onmessage = ({data}) => {
 
   // UPDATING THE DOM
   // ============================================================
-
+  console.log('state.problems.length:', state.problems.length);
+  console.log('state.filters:', state.filters)
   // state to save back to localstore
   // serialize the state, and delete reversible big bits so we can save in localstorage
   let tinyState = {
     shuffle: state.shuffle,
-    admin: state.admin
+    admin: state.admin,
+    filters: state.filters
   }
   const serializedState = JSON.stringify(tinyState)
 
