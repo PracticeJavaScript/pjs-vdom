@@ -69,26 +69,21 @@ function getNextProblemIndex(currIndex, length) {
     if (state.currentProblemIndex === problems.length -1) {
       newIndex = 0
     } else {
-      // if not at then end, increment as normal
+      // if not at the end, increment as normal
       newIndex = state.currentProblemIndex + 1
     }
   }
   return newIndex
 }
 
-function getPreviousProblemIndex(currIndex, length) {
+function getBackProblemIndex(currIndex, length) {
   let newIndex;
-  // if shuffle on, return new random index
-  if (state.shuffle) {
-    newIndex = Math.floor(Math.random() * length)
+  // if at the end of the problems array, go to the start
+  if (state.currentProblemIndex === 0) {
+    newIndex = problems.length -1
   } else {
-    // if at the end of the problems array, go to the start
-    if (state.currentProblemIndex === problems.length -1) {
-      newIndex = 0
-    } else {
-      // if not at then end, increment as normal
-      newIndex = state.currentProblemIndex + 1
-    }
+    // if not at the beginning, decrement as normal
+    newIndex = state.currentProblemIndex - 1
   }
   return newIndex
 }
@@ -96,6 +91,13 @@ function getPreviousProblemIndex(currIndex, length) {
 function getNextProblem(probs) {
   // set new index to state
   state.currentProblemIndex = getNextProblemIndex(state.currentProblemIndex, problems.length)
+  // return new problem from that index
+  return probs[state.currentProblemIndex]
+}
+
+function getBackProblem(probs) {
+  // set new index to state
+  state.currentProblemIndex = getBackProblemIndex(state.currentProblemIndex, problems.length)
   // return new problem from that index
   return probs[state.currentProblemIndex]
 }
@@ -211,6 +213,23 @@ self.onmessage = ({data}) => {
     }
     case 'next': {
       state.problem = getNextProblem(problems)
+      state.testsPass = false
+      state.events = []
+      const analyticsNavObj = {
+      name: 'ga',
+        data: {
+          hitType: 'event',
+          eventLabel: 'Navigation',
+          eventCategory: state.problem && state.problem.name,
+          eventAction: 'navigated_to'
+        }
+      };
+      state.events.push(analyticsNavObj);
+      state.problem.tests = testSuite(state.problem.given, state.problem)
+      break
+    }
+    case 'back': {
+      state.problem = getBackProblem(problems)
       state.testsPass = false
       state.events = []
       const analyticsNavObj = {
