@@ -14,14 +14,15 @@ export default (state) => {
   // }
 
   return (
-    <main>
+    <main className={state.admin ? 'admin' : ''}>
       <heading>
         <div class="brand">
           <h1>Practice JavaScript!</h1>
         </div>
         <nav>
-          <button data-click={{type: 'shuffle'}} className={state.shuffle ? 'active' : ''}>shuffle</button>
-          <button data-click={{type: 'next'}} data-keybinding={{type: 'next'}} title="NEXT"> &gt; </button>
+          <button id="back" data-click={{type: 'back'}} data-keybinding={{type: 'back'}} title="BACK" className={state.shuffle ? 'hide' : ''}> &lt; </button>
+          <button id="shuffle" data-click={{type: 'shuffle'}} className={state.shuffle ? 'active' : ''} >shuffle</button>
+          <button id="next" data-click={{type: 'next'}} data-keybinding={{type: 'next'}} title="NEXT"> &gt; </button>
         </nav>
       </heading>
       {page}

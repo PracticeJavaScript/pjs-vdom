@@ -21,7 +21,8 @@
     ]
   },
   "dependencies": {
-    "chai": "^3.5.0"
+    "chai": "^3.5.0",
+    "konami-js": "0.0.2"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",

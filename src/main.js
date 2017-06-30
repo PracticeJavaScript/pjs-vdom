@@ -11,6 +11,7 @@ import { getLocalPathname } from 'local-links'
 import { debounce } from './helpers'
 import './styles/main.styl'
 import {assert} from 'chai'
+import Konami from 'konami-js'
 import probs from 'pjs-problems'
 import analytics from './analytics' // to include analytics snippets into bundle
 
@@ -99,7 +100,7 @@ worker.onmessage = ({data}) => {
 worker.postMessage({type: 'start', payload: {
   virtualDom: toJson(virtualize(rootElement)),
   url: location.pathname,
-  localState: getLocalState()
+  localState: window.localState = getLocalState()
 }})
 
 // if the user hits the back/forward buttons
@@ -224,3 +225,11 @@ window.addEventListener('ga', e => {
     navigator.serviceWorker.register('/sw.js');
   }
 })();
+
+let admin = window.localState.admin || false;
+new Konami(() => {
+  // toggle admin mode with konami code
+  admin = !admin;
+  console.log('KONAMI! admin:', admin);
+  worker.postMessage({type: 'konami', payload: admin})
+});
