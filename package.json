@@ -5,7 +5,7 @@
   "license": "MIT",
   "main": "index.js",
   "engines": {
-    "node": "7"
+    "node": "8"
   },
   "scripts": {
     "build": "webpack",
@@ -21,14 +21,15 @@
     ]
   },
   "dependencies": {
-    "chai": "^3.5.0"
+    "chai": "^3.5.0",
+    "konami-js": "0.0.2"
   },
   "devDependencies": {
-    "babel-core": "^6.24.1",
+    "babel-core": "^6.25.0",
     "babel-loader": "^6.2.0",
     "babel-plugin-h-children-fix": "^1.1.0",
     "babel-plugin-transform-react-jsx": "^6.2.0",
-    "babel-preset-env": "^1.5.1",
+    "babel-preset-env": "^1.5.2",
     "babel-register": "^6.2.0",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.23.0",
@@ -36,12 +37,12 @@
     "eslint-config-standard-react": "^1.2.1",
     "favicons-webpack-plugin": "0.0.7",
     "file-loader": "^0.8.5",
-    "firebase-tools": "^3.9.0",
+    "firebase-tools": "^3.9.1",
     "hjs-webpack": "^5.1.0",
     "http-serve": "^1.0.1",
     "json-loader": "^0.5.4",
     "local-links": "^1.4.0",
-    "pjs-problems": "^3.0.0",
+    "pjs-problems": "^3.0.4",
     "postcss-loader": "^0.8.0",
     "pwa-manifest-webpack-plugin": "^1.0.5",
     "script-loader": "^0.6.1",
@@ -50,7 +51,7 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^2.4.0",
     "sw-precache-webpack-plugin": "^0.11.3",
-    "url-loader": "^0.5.7",
+    "url-loader": "^0.5.9",
     "vdom-as-json": "^1.0.8",
     "vdom-serialized-patch": "^1.0.2",
     "vdom-to-html": "^2.2.0",

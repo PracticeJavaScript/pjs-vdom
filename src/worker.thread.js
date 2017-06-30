@@ -69,9 +69,21 @@ function getNextProblemIndex(currIndex, length) {
     if (state.currentProblemIndex === problems.length -1) {
       newIndex = 0
     } else {
-      // if not at then end, increment as normal
+      // if not at the end, increment as normal
       newIndex = state.currentProblemIndex + 1
     }
+  }
+  return newIndex
+}
+
+function getBackProblemIndex(currIndex, length) {
+  let newIndex;
+  // if at the end of the problems array, go to the start
+  if (state.currentProblemIndex === 0) {
+    newIndex = problems.length -1
+  } else {
+    // if not at the beginning, decrement as normal
+    newIndex = state.currentProblemIndex - 1
   }
   return newIndex
 }
@@ -79,6 +91,13 @@ function getNextProblemIndex(currIndex, length) {
 function getNextProblem(probs) {
   // set new index to state
   state.currentProblemIndex = getNextProblemIndex(state.currentProblemIndex, problems.length)
+  // return new problem from that index
+  return probs[state.currentProblemIndex]
+}
+
+function getBackProblem(probs) {
+  // set new index to state
+  state.currentProblemIndex = getBackProblemIndex(state.currentProblemIndex, problems.length)
   // return new problem from that index
   return probs[state.currentProblemIndex]
 }
@@ -166,6 +185,7 @@ self.onmessage = ({data}) => {
       currentVDom = fromJson(payload.virtualDom)
       if (payload.localState) {
         state.shuffle = payload.localState.shuffle
+        state.admin = payload.localState.admin
       }
       state.url = state.url || payload.url
       // go get a new problem!
@@ -208,6 +228,23 @@ self.onmessage = ({data}) => {
       state.problem.tests = testSuite(state.problem.given, state.problem)
       break
     }
+    case 'back': {
+      state.problem = getBackProblem(problems)
+      state.testsPass = false
+      state.events = []
+      const analyticsNavObj = {
+      name: 'ga',
+        data: {
+          hitType: 'event',
+          eventLabel: 'Navigation',
+          eventCategory: state.problem && state.problem.name,
+          eventAction: 'navigated_to'
+        }
+      };
+      state.events.push(analyticsNavObj);
+      state.problem.tests = testSuite(state.problem.given, state.problem)
+      break
+    }
     case 'shuffle': {
       state.shuffle = !state.shuffle
       state.events = []
@@ -234,16 +271,22 @@ self.onmessage = ({data}) => {
       // todo: show a toast that new content has been loaded for them
       break
     }
+    case 'konami': {
+      state.admin = payload
+      console.log('state.admin:', state.admin);
+      break
+    }
   }
 
 
   // UPDATING THE DOM
   // ============================================================
 
-  // just for fun
+  // state to save back to localstore
   // serialize the state, and delete reversible big bits so we can save in localstorage
   let tinyState = {
-    shuffle: state.shuffle
+    shuffle: state.shuffle,
+    admin: state.admin
   }
   const serializedState = JSON.stringify(tinyState)
 
